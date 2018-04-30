@@ -2,7 +2,7 @@
 #define QTDAUTHSTATE_H
 
 #include <QObject>
-#include "qtdlib/common/qabstracttdobject.h"
+#include "common/qabstracttdobject.h"
 #include "qtdauthcode.h"
 
 /**

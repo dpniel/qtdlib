@@ -15,10 +15,12 @@ set(
     auth/qtdauthstate.cpp
     auth/qtdauthcode.cpp
     auth/qtdauthstatefactory.cpp
-    auth/qtdauthparametersresponse.cpp
-    auth/qtdauthencryptionkeyresponse.cpp
-    auth/qtdauthphonenumberresponse.cpp
-    auth/qtdauthcoderesponse.cpp
+    auth/qtdauthmanager.cpp
+    auth/qtdauthparams.cpp
+    auth/requests/qtdauthparametersresponse.cpp
+    auth/requests/qtdauthencryptionkeyresponse.cpp
+    auth/requests/qtdauthphonenumberresponse.cpp
+    auth/requests/qtdauthcoderesponse.cpp
     chat/qtdchat.cpp
     chat/qtdchatmemberstatus.cpp
     chat/qtdbasicgroupchat.cpp
@@ -65,6 +67,8 @@ set(
     user/qtduserstatusfactory.cpp
     user/qtdprofilephoto.cpp
     user/requests/qtdblockuserrequest.cpp
+    quick/plugin.cpp
+    quick/users.cpp
 )
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
