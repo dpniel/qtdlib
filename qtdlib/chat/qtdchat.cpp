@@ -152,6 +152,11 @@ QTdNotificationSettings *QTdChat::notificationSettings() const
     return m_notifySettings;
 }
 
+QObject *QTdChat::messages() const
+{
+    return Q_NULLPTR;
+}
+
 void QTdChat::openChat()
 {
     auto *req = new QTdOpenChatRequest;
