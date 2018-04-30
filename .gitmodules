@@ -1,0 +1,3 @@
+[submodule "vendor/tdlib"]
+	path = vendor/tdlib
+	url = https://github.com/tdlib/td.git
