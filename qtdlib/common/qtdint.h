@@ -14,6 +14,10 @@ public:
     QString toQmlValue() const;
     qint32 value() const;
 
+    bool isValid() const {
+        return _value > 0;
+    }
+
     void operator=(const qint32 &v) {
         _value = v;
     }
@@ -36,6 +40,9 @@ public:
     QJsonValue toJsonValue() const;
     QString toQmlValue() const;
     qint64 value() const;
+    bool isValid() const {
+        return _value > 0;
+    }
 
     void operator=(const qint64 &v) {
         _value = v;
@@ -59,6 +66,9 @@ public:
     QJsonValue toJsonValue() const;
     QString toQmlValue() const;
     qint64 value() const;
+    bool isValid() const {
+        return _value > 0;
+    }
 
     void operator=(const qint64 &v) {
         _value = v;

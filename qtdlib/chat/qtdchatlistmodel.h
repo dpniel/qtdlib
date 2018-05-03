@@ -6,6 +6,8 @@
 #include "models/QmlObjectListModel.h"
 #include "qtdchat.h"
 
+typedef QList<qint64> PinnedChats;
+
 class QTdChatListModel : public QObject
 {
     Q_OBJECT
@@ -32,8 +34,16 @@ private slots:
     void handleUpdateChatReplyMarkup(const QJsonObject &chat);
     void handleUpdateChatTitle(const QJsonObject &chat);
     void handleUpdateChatUnreadMentionCount(const QJsonObject &chat);
+    /**
+     * @brief Set the pinned chats for the user
+     *
+     * We maintain an internal list m_pinnedChats which get's updated on
+     * changes via updateChatIsPinned events.
+     */
+    void handlePinChatAction(const qint64 &chatId, const bool &pinned);
 private:
     QQmlObjectListModel<QTdChat> *m_model;
+    PinnedChats m_pinnedChats;
 };
 
 #endif // QTDCHATLISTMODEL_H

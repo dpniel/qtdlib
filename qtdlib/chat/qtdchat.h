@@ -154,6 +154,21 @@ public:
      */
     Q_INVOKABLE void closeChat();
 
+    /**
+     * @brief Pin a chat
+     */
+    Q_INVOKABLE void pinChat();
+
+    /**
+     * @brief Unpin chat
+     */
+    Q_INVOKABLE void unpinChat();
+
+    /**
+     * @brief Set chat title
+     */
+    Q_INVOKABLE void setTitle(const QString &title);
+
 signals:
     void chatTypeChanged(QTdChatType *chatType);
     void titleChanged(QString title);
@@ -169,6 +184,7 @@ signals:
     void notificationSettingsChanged();
     void messagesChanged();
     void chatStatusChanged();
+    void pinChatAction(qint64 chatId, bool pinned);
 
 public slots:
     void updateChatOrder(const QJsonObject &json);
@@ -179,6 +195,7 @@ public slots:
     void updateChatReplyMarkup(const QJsonObject &json);
     void updateChatTitle(const QJsonObject &json);
     void updateChatUnreadMentionCount(const QJsonObject &json);
+    void updateLastMessage(const QJsonObject &json);
 
 protected:
     QQmlObjectListModel<QTdMessage> *m_messages;

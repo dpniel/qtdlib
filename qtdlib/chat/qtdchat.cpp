@@ -4,7 +4,7 @@
 #include "client/qtdclient.h"
 #include "chat/requests/qtdopenchatrequest.h"
 #include "chat/requests/qtdclosechatrequest.h"
-
+#include "chat/requests/qtdsetchattitlerequest.h"
 
 QTdChat::QTdChat(QObject *parent) : QAbstractInt64Id(parent),
     m_chatType(0), m_chatPhoto(0), m_lastMessage(0),
@@ -30,14 +30,7 @@ void QTdChat::unmarshalJson(const QJsonObject &json)
     emit chatTypeChanged(m_chatType);
 
     updateChatPhoto(json["photo"].toObject());
-
-    if (m_lastMessage) {
-        delete m_lastMessage;
-        m_lastMessage = 0;
-    }
-    m_lastMessage = new QTdMessage(this);
-    m_lastMessage->unmarshalJson(json["last_message"].toObject());
-    emit lastMessageChanged(m_lastMessage);
+    updateLastMessage(json["last_message"].toObject());
 
     updateChatOrder(json);
     updateChatIsPinned(json);
@@ -171,6 +164,29 @@ void QTdChat::closeChat()
     QTdClient::instance()->send(req);
 }
 
+void QTdChat::pinChat()
+{
+    if (!m_isPinned) {
+        emit pinChatAction(id(), true);
+    }
+}
+
+void QTdChat::unpinChat()
+{
+    if (m_isPinned) {
+        emit pinChatAction(id(), false);
+    }
+}
+
+void QTdChat::setTitle(const QString &title)
+{
+    if (m_title != title) {
+        auto *req = new QTdSetChatTitleRequest;
+        req->setTitle(id(), title);
+        QTdClient::instance()->send(req);
+    }
+}
+
 void QTdChat::updateChatOrder(const QJsonObject &json)
 {
     m_order = json["order"];
@@ -217,7 +233,7 @@ void QTdChat::updateChatPhoto(const QJsonObject &photo)
 
 void QTdChat::updateChatReplyMarkup(const QJsonObject &json)
 {
-    https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1update_chat_reply_markup.html
+//    https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1update_chat_reply_markup.html
     Q_UNUSED(json);
     qWarning() << __func__ << "NOT IMPLEMENTED";
 }
@@ -232,6 +248,23 @@ void QTdChat::updateChatUnreadMentionCount(const QJsonObject &json)
 {
     m_unreadMentionCount = json["unread_mention_count"];
     emit unreadMentionCountChanged();
+}
+
+void QTdChat::updateLastMessage(const QJsonObject &json)
+{
+    if (json.isEmpty()) {
+        return;
+    }
+
+    if (m_lastMessage) {
+        m_lastMessage = 0;
+    }
+
+    auto *m = new QTdMessage();
+    m_messages->append(m);
+    m->unmarshalJson(json["last_message"].toObject());
+    m_lastMessage = m;
+    emit lastMessageChanged(m_lastMessage);
 }
 
 QTdChatType *QTdChat::chatType() const

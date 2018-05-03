@@ -3,8 +3,6 @@
 
 #include <QObject>
 #include <QJsonObject>
-#include "user/qtduser.h"
-#include "models/QmlObjectListModel.h"
 
 class Users : public QObject
 {
@@ -16,16 +14,7 @@ public:
     QObject* model() const;
 
 signals:
-    void modelChanged(QObject* model);
-
-public slots:
-
-private slots:
-    void handleUpdateUser(const QJsonObject &user);
-    void handleUpdateUserStatus(const QString &userId, const QJsonObject &status);
-
-private:
-    QQmlObjectListModel<QTdUser> *m_model;
+    void modelChanged();
 };
 
 #endif // USERS_H

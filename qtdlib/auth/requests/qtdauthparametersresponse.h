@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "common/qtdrequest.h"
+#include "auth/qtdauthparams.h"
 
 class QTdAuthParametersResponse : public QTdRequest
 {
@@ -10,7 +11,7 @@ class QTdAuthParametersResponse : public QTdRequest
 public:
     explicit QTdAuthParametersResponse(QObject *parent = nullptr);
 
-    void setParameters(QAbstractTdObject *params);
+    void setParameters(QTdAuthParams *params);
 
     QJsonObject marshalJson();
 

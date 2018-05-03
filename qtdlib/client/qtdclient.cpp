@@ -7,7 +7,6 @@
 #include "qtdhandle.h"
 #include "auth/qtdauthstatefactory.h"
 #include "connections/qtdconnectionstatefactory.h"
-#include <functional>
 
 QJsonObject execTd(const QJsonObject &json) {
     qDebug() << "[EXEC]" << json;
@@ -100,13 +99,15 @@ void QTdClient::handleRecv(const QJsonObject &data)
     qDebug() << "TYPE >> " << type;
     qDebug() << "DATA >> " << data;
     qDebug() << "-------------------------------------------";
+
     if (m_events.contains(type)) {
         m_events.value(type)(data);
-    } else {
-        qDebug() << "---------[UNHANDLED]-------------";
-        qDebug() << type;
-        qDebug() << "---------------------------------";
+        return;
     }
+
+    qDebug() << "---------[UNHANDLED]-------------";
+    qDebug() << type;
+    qDebug() << "---------------------------------";
 }
 
 void QTdClient::init()
@@ -141,6 +142,10 @@ void QTdClient::init()
         emit updateUser(data["user"].toObject());
     });
 
+    m_events.insert(QStringLiteral("user"), [=](const QJsonObject &data){
+        emit updateUser(data);
+    });
+
     m_events.insert(QStringLiteral("updateUserStatus"), [=](const QJsonObject &data){
         const QString userId = QString::number(qint32(data["user_id"].toInt()));
         emit updateUserStatus(userId, data["status"].toObject());
@@ -150,8 +155,14 @@ void QTdClient::init()
         emit updateFile(data["file"].toObject());
     });
 
-    m_events.insert(QStringLiteral("updateNewChat"), [=](const QJsonObject &data){ emit updateNewChat(data["chat"].toObject()); });
-    m_events.insert(QStringLiteral("updateBasicGroup"), [=](const QJsonObject &data){ emit updateBasicGroup(data["basic_group"].toObject()); });
+    m_events.insert(QStringLiteral("updateNewChat"), [=](const QJsonObject &data){
+        emit updateNewChat(data["chat"].toObject());
+    });
+
+    m_events.insert(QStringLiteral("updateBasicGroup"), [=](const QJsonObject &data){
+        emit updateBasicGroup(data["basic_group"].toObject());
+    });
+
     m_events.insert(QStringLiteral("basicGroup"), [=](const QJsonObject &data){ emit updateBasicGroup(data); });
     m_events.insert(QStringLiteral("secretChat"), [=](const QJsonObject &data){ emit secretChat(data); });
     m_events.insert(QStringLiteral("updateSecretChat"), [=](const QJsonObject &data){ emit updateSecretChat(data["secret_chat"].toObject()); });

@@ -132,7 +132,7 @@ bool QTdChatListSortFilterModel::lessThan(const QModelIndex &source_left, const 
      * If the message under evaluation i.e source_left hasn't received the lastMessage
      * yet. Then retain it's original ordering we received from tdlib.
      */
-    if (!left->lastMessage()) {
+    if (!left->lastMessage() || !right->lastMessage()) {
         return sortOrder() == Qt::AscendingOrder;
     }
 

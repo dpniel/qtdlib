@@ -1,6 +1,7 @@
 #include "qtdchatlistmodel.h"
 #include "client/qtdclient.h"
 #include "chat/requests/qtdgetchatsrequest.h"
+#include "chat/requests/qtdsetpinnedchatsrequest.h"
 #include "chat/qtdchattypefactory.h"
 
 QTdChatListModel::QTdChatListModel(QObject *parent) : QObject(parent),
@@ -34,6 +35,12 @@ void QTdChatListModel::handleUpdateNewChat(const QJsonObject &chat)
         tdchat->unmarshalJson(chat);
         m_model->append(tdchat);
         connect(tdchat, &QTdChat::chatStatusChanged, this, &QTdChatListModel::chatStatusChanged);
+        // We also need to update the internal pinned chats list now
+        // otherwise any pinned chats will get removed when QTdChat::pinChat/unpinChat() is called
+        connect(tdchat, &QTdChat::pinChatAction, this, &QTdChatListModel::handlePinChatAction);
+        if (tdchat->isPinned()) {
+            m_pinnedChats << tdchat->id();
+        }
     }
     tdchat->unmarshalJson(chat);
     emit contentsChanged();
@@ -54,9 +61,7 @@ void QTdChatListModel::handleUpdateChatLastMessage(const QJsonObject chat)
     const qint64 id = qint64(chat["chat_id"].toDouble());
     QTdChat *tdchat = m_model->getByUid(QString::number(id));
     if (tdchat) {
-        // TODO: update last message
-        tdchat->lastMessage()->unmarshalJson(chat["last_message"].toObject());
-        qDebug() << "Updating chat order";
+        tdchat->updateLastMessage(chat);
         tdchat->updateChatOrder(chat);
         emit contentsChanged();
 //        QTdClient::instance()->send(QJsonObject{
@@ -120,6 +125,12 @@ void QTdChatListModel::handleUpdateChatIsPinned(const QJsonObject &json)
         qDebug() << "Updating chat isPinned";
         tdchat->updateChatIsPinned(json);
         emit contentsChanged();
+        // Update our internal PinnedChats list
+        if (tdchat->isPinned() && !m_pinnedChats.contains(tdchat->id())) {
+            m_pinnedChats << tdchat->id();
+        } else if (!tdchat->isPinned() && m_pinnedChats.contains(tdchat->id())) {
+            m_pinnedChats.removeAll(tdchat->id());
+        }
     }
 }
 
@@ -165,4 +176,20 @@ void QTdChatListModel::handleUpdateChatUnreadMentionCount(const QJsonObject &cha
         tdchat->updateChatUnreadMentionCount(chat);
         emit contentsChanged();
     }
+}
+
+void QTdChatListModel::handlePinChatAction(const qint64 &chatId, const bool &pinned)
+{
+    // Copy the internal list as we will wait for the updateChatIsPinned events
+    // to update m_pinnedChats. This prevents us from prematurely updating and
+    // having to handle errors when updating the pinned chats list.
+    PinnedChats chats = m_pinnedChats;
+    if (pinned && !m_pinnedChats.contains(chatId)) {
+        chats << chatId;
+    } else if (!pinned && m_pinnedChats.contains(chatId)) {
+        chats.removeAll(chatId);
+    }
+    auto *req = new QTdSetPinnedChatsRequest;
+    req->setPinnedChats(chats);
+    QTdClient::instance()->send(req);
 }

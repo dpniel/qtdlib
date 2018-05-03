@@ -39,6 +39,8 @@ set(
     chat/requests/qtdgetsupergrouprequest.cpp
     chat/requests/qtdopenchatrequest.cpp
     chat/requests/qtdclosechatrequest.cpp
+    chat/requests/qtdsetpinnedchatsrequest.cpp
+    chat/requests/qtdsetchattitlerequest.cpp
     common/qabstracttdobject.cpp
     common/qabstractint53id.cpp
     common/qabstractint32id.cpp
@@ -56,10 +58,12 @@ set(
     files/qtddownloadfilerequest.cpp
     files/qtdphoto.cpp
     messages/qtdmessage.cpp
+    messages/qtdmessagesendingstate.cpp
     models/QmlObjectListModel.cpp
     models/QmlVariantListModel.cpp
     notifications/qtdnotificationsettings.cpp
     user/qtduser.cpp
+    user/qtdusers.cpp
     user/qtdlinkstate.cpp
     user/qtdlinkstatefactory.cpp
     user/qtduserstatus.cpp

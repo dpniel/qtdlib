@@ -61,6 +61,11 @@ public:
      *
      * QTdClient will take ownership of obj and schedule deletion once
      * it is done with it,
+     *
+     * Note: there is only a limited set of actions that can be sent
+     * through exec. Still need to figure out what they are. Once
+     * found it will be indicated in each QTdRequest derived class
+     * documentation
      */
     QFuture<QJsonObject> exec(QTdRequest *obj);
     QFuture<QJsonObject> exec(const QJsonObject &json);

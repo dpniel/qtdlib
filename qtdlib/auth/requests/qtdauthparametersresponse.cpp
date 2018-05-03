@@ -4,7 +4,7 @@ QTdAuthParametersResponse::QTdAuthParametersResponse(QObject *parent) : QTdReque
 {
 }
 
-void QTdAuthParametersResponse::setParameters(QAbstractTdObject *params)
+void QTdAuthParametersResponse::setParameters(QTdAuthParams *params)
 {
     m_params = params->marshalJson();
 }
