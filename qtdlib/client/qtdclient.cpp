@@ -163,10 +163,16 @@ void QTdClient::init()
         emit updateBasicGroup(data["basic_group"].toObject());
     });
 
+    m_events.insert(QStringLiteral("updateBasicGroupFullInfo"), [=](const QJsonObject &data){
+        emit updateBasicGroupFullInfo(data);
+    });
+
     m_events.insert(QStringLiteral("basicGroup"), [=](const QJsonObject &data){ emit updateBasicGroup(data); });
     m_events.insert(QStringLiteral("secretChat"), [=](const QJsonObject &data){ emit secretChat(data); });
     m_events.insert(QStringLiteral("updateSecretChat"), [=](const QJsonObject &data){ emit updateSecretChat(data["secret_chat"].toObject()); });
     m_events.insert(QStringLiteral("supergroup"), [=](const QJsonObject &data){ emit superGroup(data); });
+    m_events.insert(QStringLiteral("updateSupergroupFullInfo"), [=](const QJsonObject &data){ emit updateSupergroupFullInfo(data); });
+    m_events.insert(QStringLiteral("supergroupFullInfo"), [=](const QJsonObject &data){ emit supergroupFullInfo(data); });
     m_events.insert(QStringLiteral("updateSupergroup"), [=](const QJsonObject &data){ emit updateSuperGroup(data["supergroup"].toObject()); });
     m_events.insert(QStringLiteral("updateChatOrder"), [=](const QJsonObject &data){ emit updateChatOrder(data); });
     m_events.insert(QStringLiteral("updateChatLastMessage"), [=](const QJsonObject &data){ emit updateChatLastMessage(data); });
@@ -177,6 +183,7 @@ void QTdClient::init()
     m_events.insert(QStringLiteral("updateChatReplyMarkup"), [=](const QJsonObject &data){ emit updateChatReplyMarkup(data); });
     m_events.insert(QStringLiteral("updateChatTitle"), [=](const QJsonObject &data){ emit updateChatTitle(data); });
     m_events.insert(QStringLiteral("updateChatUnreadMentionCount"), [=](const QJsonObject &data){ emit updateChatUnreadMentionCount(data); });
+    m_events.insert(QStringLiteral("updateUserChatAction"), [=](const QJsonObject &data){ emit updateUserChatAction(data); });
 }
 
 

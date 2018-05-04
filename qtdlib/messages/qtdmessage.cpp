@@ -115,6 +115,19 @@ bool QTdMessage::containsUnreadMention() const
     return m_containsUnreadMention;
 }
 
+QString QTdMessage::summary() const
+{
+    if (!m_sender) {
+        return QString();
+    }
+    QString name = m_sender->firstName();
+    if (name.isEmpty()) {
+        name = m_sender->username();
+    }
+
+    return QString("%1: %2").arg(name, QStringLiteral("Sent a message"));
+}
+
 void QTdMessage::updateSender(const qint32 &senderId)
 {
     if (senderId != m_sender_user_id.value()) {

@@ -40,7 +40,8 @@ class QTdChat : public QAbstractInt64Id
     Q_PROPERTY(QString lastReadOutboxMessageId READ qmlLastReadOutboxMessageId NOTIFY lastReadOutboxMessageIdChanged)
     Q_PROPERTY(bool hasUnreadMentions READ hasUnreadMentions NOTIFY unreadMentionCountChanged)
     Q_PROPERTY(QString unreadMentionCount READ qmlUnreadMentionCount NOTIFY unreadMentionCountChanged)
-    Q_PROPERTY(QTdNotificationSettings *notificationSettings READ notificationSettings NOTIFY notificationSettingsChanged)
+    Q_PROPERTY(QTdNotificationSettings* notificationSettings READ notificationSettings NOTIFY notificationSettingsChanged)
+    Q_PROPERTY(QString summary READ summary NOTIFY summaryChanged)
     // TODO:
     // int64:reply_markup_message_id
     // draftMessage:draf_message && updateChatDraftMessage
@@ -135,6 +136,17 @@ public:
      */
     QTdNotificationSettings *notificationSettings() const;
 
+    /**
+     * @brief Summary of current chat state in the UI
+     *
+     * This can be used to show a snippet of last message
+     * or "User is typing..." type messages.
+     */
+    virtual QString summary() const;
+
+    /**
+     * @brief Message model
+     */
     QObject *messages() const;
 
     /**
@@ -185,6 +197,7 @@ signals:
     void messagesChanged();
     void chatStatusChanged();
     void pinChatAction(qint64 chatId, bool pinned);
+    void summaryChanged();
 
 public slots:
     void updateChatOrder(const QJsonObject &json);
@@ -196,8 +209,10 @@ public slots:
     void updateChatTitle(const QJsonObject &json);
     void updateChatUnreadMentionCount(const QJsonObject &json);
     void updateLastMessage(const QJsonObject &json);
+    void handleUpdateChatAction(const QJsonObject &json);
 
 protected:
+    virtual void updateChatAction(const QJsonObject &json);
     QQmlObjectListModel<QTdMessage> *m_messages;
 
 private:
@@ -213,6 +228,15 @@ private:
     QTdInt64 m_lastReadOutboxMsg;
     QTdInt32 m_unreadMentionCount;
     QTdNotificationSettings *m_notifySettings;
+
+    struct useraction {
+        QTdInt32 userId;
+        QString description;
+        useraction(){}
+        useraction(const qint32 id, const QString desc) : userId(id), description(desc) {}
+    };
+
+    QMap<qint32, useraction> m_chatActions;
 };
 
 #endif // QTDCHAT_H

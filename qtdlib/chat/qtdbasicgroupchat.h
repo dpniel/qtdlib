@@ -2,9 +2,10 @@
 #define QTDBASICGROUPCHAT_H
 
 #include <QObject>
+#include <QMap>
 #include "qtdchat.h"
-#include "qtdbasicgroupinfo.h"
 #include "qtdchatmemberstatus.h"
+#include "qtdchatmember.h"
 
 class QTdBasicGroupChat : public QTdChat
 {
@@ -15,6 +16,11 @@ class QTdBasicGroupChat : public QTdChat
     Q_PROPERTY(bool everyoneIsAdmin READ everyoneIsAdmin NOTIFY groupChanged)
     Q_PROPERTY(bool isActive READ isActive NOTIFY groupChanged)
     Q_PROPERTY(QString upgradedToSuperGroupId READ qmlUpgradedToSuperGroupId NOTIFY groupChanged)
+
+    // BasicGroupFullInfo properties
+    Q_PROPERTY(QString creatorUserId READ qmlCreatorUserId NOTIFY groupInfoChanged)
+    Q_PROPERTY(QObject *members READ qmlMembers NOTIFY groupInfoChanged)
+    Q_PROPERTY(QString inviteLink READ inviteLink NOTIFY groupInfoChanged)
 public:
     explicit QTdBasicGroupChat(QObject *parent = nullptr);
 
@@ -27,12 +33,20 @@ public:
     bool isActive() const;
     QString qmlUpgradedToSuperGroupId() const;
     qint32 upgradedToSuperGroupId() const;
+    QString qmlCreatorUserId() const;
+    qint32 creatorUserId() const;
+    QObject *qmlMembers() const;
+    QQmlObjectListModel<QTdChatMember> *members() const;
+    QString inviteLink() const;
+
 signals:
     void groupChanged();
+    void groupInfoChanged();
 
 private slots:
     void requestGroupData();
     void updateGroupData(const QJsonObject &json);
+    void updateGroupInfo(const QJsonObject &json);
 
 private:
     QTdInt32 m_groupId;
@@ -41,6 +55,9 @@ private:
     bool m_everyoneIsAdmin;
     bool m_isActive;
     QTdInt32 m_upgradedSGID;
+    QTdInt32 m_creatorId;
+    QQmlObjectListModel<QTdChatMember> *m_members;
+    QString m_inviteLink;
 };
 
 #endif // QTDBASICGROUPCHAT_H

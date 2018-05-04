@@ -25,6 +25,8 @@ class QTdMessage : public QAbstractInt64Id
     // These aren't original properties of the tdlib message class but we can
     // can make life easier for use in QML.
     Q_PROPERTY(QTdUser *sender READ sender NOTIFY senderChanged)
+    // Provide a summary text for display in the chatlist
+    Q_PROPERTY(QString summary READ summary NOTIFY senderChanged)
 public:
     explicit QTdMessage(QObject *parent = nullptr);
 
@@ -54,6 +56,8 @@ public:
     bool isChannelPost() const;
 
     bool containsUnreadMention() const;
+
+    QString summary() const;
 
 signals:
     void messageChanged();

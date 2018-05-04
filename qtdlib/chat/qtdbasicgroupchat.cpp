@@ -1,14 +1,18 @@
 #include "qtdbasicgroupchat.h"
 #include <QDebug>
+#include <QJsonArray>
 #include "chat/requests/qtdgetbasicgrouprequest.h"
 #include "client/qtdclient.h"
 
 QTdBasicGroupChat::QTdBasicGroupChat(QObject *parent) : QTdChat(parent),
     m_groupId(0), m_memberCount(0), m_status(Q_NULLPTR),
-    m_everyoneIsAdmin(false), m_isActive(false), m_upgradedSGID(0)
+    m_everyoneIsAdmin(false), m_isActive(false), m_upgradedSGID(0),
+    m_creatorId(0), m_members(Q_NULLPTR)
 {
+    m_members = new QQmlObjectListModel<QTdChatMember>(this, "", "userId");
     connect(this, &QTdChat::chatTypeChanged, this, &QTdBasicGroupChat::requestGroupData);
     connect(QTdClient::instance(), &QTdClient::updateBasicGroup, this, &QTdBasicGroupChat::updateGroupData);
+    connect(QTdClient::instance(), &QTdClient::updateBasicGroupFullInfo, this, &QTdBasicGroupChat::updateGroupInfo);
 }
 
 QString QTdBasicGroupChat::qmlGroupId() const
@@ -54,6 +58,31 @@ QString QTdBasicGroupChat::qmlUpgradedToSuperGroupId() const
 qint32 QTdBasicGroupChat::upgradedToSuperGroupId() const
 {
     return m_upgradedSGID.value();
+}
+
+QString QTdBasicGroupChat::qmlCreatorUserId() const
+{
+    return m_creatorId.toQmlValue();
+}
+
+qint32 QTdBasicGroupChat::creatorUserId() const
+{
+    return m_creatorId.value();
+}
+
+QObject *QTdBasicGroupChat::qmlMembers() const
+{
+    return m_members;
+}
+
+QQmlObjectListModel<QTdChatMember> *QTdBasicGroupChat::members() const
+{
+    return m_members;
+}
+
+QString QTdBasicGroupChat::inviteLink() const
+{
+    return m_inviteLink;
 }
 
 void QTdBasicGroupChat::requestGroupData()
@@ -104,4 +133,29 @@ void QTdBasicGroupChat::updateGroupData(const QJsonObject &json)
     m_upgradedSGID = json["upgraded_to_supergroup_id"];
     emit groupChanged();
     emit chatStatusChanged();
+    openChat();
+}
+
+void QTdBasicGroupChat::updateGroupInfo(const QJsonObject &json)
+{
+    const qint32 gid = qint32(json["basic_group_id"].toInt());
+    if (gid != groupId()) {
+        return;
+    }
+    // We always update the full list in one go so clear all
+    // the current members
+    m_members->clear();
+
+    const QJsonObject info = json["basic_group_full_info"].toObject();
+    m_creatorId = info["creator_user_id"];
+    m_inviteLink = info["invite_link"].toString();
+
+    const QJsonArray members = info["members"].toArray();
+    for (const QJsonValue &memberData : members) {
+        auto *member = new QTdChatMember;
+        member->unmarshalJson(memberData.toObject());
+        m_members->append(member);
+    }
+
+    emit groupInfoChanged();
 }

@@ -80,10 +80,13 @@ signals:
     void updateChatOrder(QJsonObject chat);
     void updateChatLastMessage(QJsonObject chat);
     void updateBasicGroup(QJsonObject group);
+    void updateBasicGroupFullInfo(QJsonObject group);
     void secretChat(QJsonObject chat);
     void updateSecretChat(QJsonObject chat);
     void superGroup(QJsonObject group);
     void updateSuperGroup(QJsonObject group);
+    void supergroupFullInfo(QJsonObject group);
+    void updateSupergroupFullInfo(QJsonObject group);
     void updateChatReadInbox(QJsonObject chat);
     void updateChatReadOutbox(QJsonObject chat);
     void updateChatIsPinned(QJsonObject chat);
@@ -91,6 +94,7 @@ signals:
     void updateChatReplyMarkup(QJsonObject chat);
     void updateChatTitle(QJsonObject chat);
     void updateChatUnreadMentionCount(QJsonObject chat);
+    void updateUserChatAction(QJsonObject chat);
 
 private slots:
     void handleRecv(const QJsonObject &data);

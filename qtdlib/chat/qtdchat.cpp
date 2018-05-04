@@ -1,10 +1,12 @@
 #include "qtdchat.h"
 #include <QDebug>
 #include "qtdchattypefactory.h"
+#include "qtdchatactionfactory.h"
 #include "client/qtdclient.h"
 #include "chat/requests/qtdopenchatrequest.h"
 #include "chat/requests/qtdclosechatrequest.h"
 #include "chat/requests/qtdsetchattitlerequest.h"
+#include "user/qtdusers.h"
 
 QTdChat::QTdChat(QObject *parent) : QAbstractInt64Id(parent),
     m_chatType(0), m_chatPhoto(0), m_lastMessage(0),
@@ -15,6 +17,7 @@ QTdChat::QTdChat(QObject *parent) : QAbstractInt64Id(parent),
 {
     setType(CHAT);
     m_messages = new QQmlObjectListModel<QTdMessage>(this, "", "id");
+    connect(QTdClient::instance(), &QTdClient::updateUserChatAction, this, &QTdChat::handleUpdateChatAction);
     emit messagesChanged();
 }
 
@@ -145,6 +148,20 @@ QTdNotificationSettings *QTdChat::notificationSettings() const
     return m_notifySettings;
 }
 
+QString QTdChat::summary() const
+{
+    if (!m_chatActions.isEmpty()) {
+        auto *users = QTdUsers::instance()->model();
+        auto *user = users->getByUid(QString::number(m_chatActions.first().userId.value()));
+        if (user) {
+            return QString("%1 %2").arg(user->firstName(), m_chatActions.first().description);
+        }
+        // TODO: get user
+        return QStringLiteral("User not available");
+    }
+    return m_lastMessage ? m_lastMessage->summary() : QString();
+}
+
 QObject *QTdChat::messages() const
 {
     return Q_NULLPTR;
@@ -265,6 +282,53 @@ void QTdChat::updateLastMessage(const QJsonObject &json)
     m->unmarshalJson(json["last_message"].toObject());
     m_lastMessage = m;
     emit lastMessageChanged(m_lastMessage);
+    emit summaryChanged();
+}
+
+void QTdChat::handleUpdateChatAction(const QJsonObject &json)
+{
+    const qint64 cid = qint64(json["chat_id"].toDouble());
+    if (cid != id()) {
+        return;
+    }
+    updateChatAction(json);
+}
+
+void QTdChat::updateChatAction(const QJsonObject &json)
+{
+    const qint32 user_id = qint32(json["user_id"].toInt());
+    const QJsonObject data = json["action"].toObject();
+    QTdChatAction *action = QTdChatActionFactory::create(data, this);
+    if (action->type() == QTdChatAction::Type::CHAT_ACTION_CANCEL && m_chatActions.contains(user_id)) {
+        m_chatActions.remove(user_id);
+    } else if (action->type() != QTdChatAction::Type::CHAT_ACTION_CANCEL && !m_chatActions.contains(user_id)) {
+        QString description;
+        // TODO: i18n these strings
+        switch (action->type()) {
+        case QTdChatAction::Type::CHAT_ACTION_CANCEL:
+            return;
+        case QTdChatAction::Type::CHAT_ACTION_CHOOSING_CONTACT:
+            description = QStringLiteral("is choosing contact");
+            break;
+        case QTdChatAction::Type::CHAT_ACTION_CHOOSING_LOCATION:
+            description = QStringLiteral("is choosing location");
+            break;
+        case QTdChatAction::Type::CHAT_ACTION_RECORDING_VIDEO:
+        case QTdChatAction::Type::CHAT_ACTION_RECORDING_VIDEO_NOTE:
+        case QTdChatAction::Type::CHAT_ACTION_RECORDING_VOICE_NOTE:
+            description = QStringLiteral("is recording");
+            break;
+        case QTdChatAction::Type::CHAT_ACTION_TYPING:
+            description = QStringLiteral("is typing...");
+            break;
+        default:
+            description = QStringLiteral("Is doing something");
+            break;
+        }
+        m_chatActions.insert(user_id, useraction(user_id, description));
+    }
+    action->deleteLater();
+    emit summaryChanged();
 }
 
 QTdChatType *QTdChat::chatType() const

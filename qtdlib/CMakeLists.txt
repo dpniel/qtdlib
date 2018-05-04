@@ -22,21 +22,24 @@ set(
     auth/requests/qtdauthphonenumberresponse.cpp
     auth/requests/qtdauthcoderesponse.cpp
     chat/qtdchat.cpp
+    chat/qtdchataction.cpp
+    chat/qtdchatactionfactory.cpp
     chat/qtdchatmemberstatus.cpp
     chat/qtdbasicgroupchat.cpp
-    chat/qtdbasicgroupinfo.cpp
     chat/qtdsecretchat.cpp
     chat/qtdsecretchatstate.cpp
     chat/qtdsupergroupchat.cpp
     chat/qtdchattype.cpp
     chat/qtdchattypefactory.cpp
     chat/qtdchatlistmodel.cpp
+    chat/qtdchatmember.cpp
     chat/qtdchatlistsortfiltermodel.cpp
     chat/requests/qtdgetbasicgrouprequest.cpp
     chat/requests/qtdgetchatsrequest.cpp
     chat/requests/qtdreportchatrequest.cpp
     chat/requests/qtdgetsecretchatrequest.cpp
     chat/requests/qtdgetsupergrouprequest.cpp
+    chat/requests/qtdgetsupergroupfullinforequest.cpp
     chat/requests/qtdopenchatrequest.cpp
     chat/requests/qtdclosechatrequest.cpp
     chat/requests/qtdsetpinnedchatsrequest.cpp
