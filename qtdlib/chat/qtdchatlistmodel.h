@@ -2,6 +2,7 @@
 #define QTDCHATLISTMODEL_H
 
 #include <QObject>
+#include <QPointer>
 #include "auth/qtdauthstate.h"
 #include "models/QmlObjectListModel.h"
 #include "qtdchat.h"
@@ -12,15 +13,24 @@ class QTdChatListModel : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QObject* model READ model NOTIFY modelChanged)
+    Q_PROPERTY(QTdChat* currentChat READ currentChat WRITE setCurrentChat NOTIFY currentChatChanged)
 public:
     explicit QTdChatListModel(QObject *parent = nullptr);
 
     QObject* model() const;
 
+    QTdChat *currentChat() const;
+
+public slots:
+    void setCurrentChat(QTdChat* currentChat);
+    void clearCurrentChat();
+
 signals:
     void modelChanged(QObject* model);
     void contentsChanged();
     void chatStatusChanged();
+
+    void currentChatChanged(QTdChat* currentChat);
 
 private slots:
     void handleUpdateNewChat(const QJsonObject &chat);
@@ -44,6 +54,7 @@ private slots:
 private:
     QQmlObjectListModel<QTdChat> *m_model;
     PinnedChats m_pinnedChats;
+    QPointer<QTdChat> m_currentChat;
 };
 
 #endif // QTDCHATLISTMODEL_H

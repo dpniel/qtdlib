@@ -133,7 +133,6 @@ void QTdBasicGroupChat::updateGroupData(const QJsonObject &json)
     m_upgradedSGID = json["upgraded_to_supergroup_id"];
     emit groupChanged();
     emit chatStatusChanged();
-    openChat();
 }
 
 void QTdBasicGroupChat::updateGroupInfo(const QJsonObject &json)

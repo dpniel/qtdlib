@@ -12,6 +12,9 @@
 #include "connections/qtdconnectionstate.h"
 #include "user/qtduser.h"
 #include "files/qtdfile.h"
+#include "messages/qtdmessage.h"
+#include "messages/qtdmessagelistmodel.h"
+#include "messages/qtdmessagecontent.h"
 
 void QTdLib::registerQmlTypes()
 {
@@ -28,6 +31,7 @@ void QTdLib::registerQmlTypes()
     qmlRegisterType<Users>(uri, 1, 0, "Users");
     qmlRegisterType<QTdChatListModel>(uri, 1, 0, "ChatList");
     qmlRegisterType<QTdChatListSortFilterModel>(uri, 1, 0, "SortedChatList");
+    qmlRegisterType<QTdMessageListModel>(uri, 1, 0, "MessageList");
 
     // qtdlib common
     qmlRegisterUncreatableType<QAbstractTdObject>(uri, 1, 0, "QTdObject", "Base TD c++ class");
@@ -89,4 +93,10 @@ void QTdLib::registerQmlTypes()
 
     // qtdlib notifications
     qmlRegisterUncreatableType<QTdNotificationSettings>(uri, 1, 0, "QTdNotificationSettings", "C++ class");
+
+    qmlRegisterUncreatableType<QTdMessage>(uri, 1, 0, "QTdMessage", "C++ class");
+    qmlRegisterUncreatableType<QTdMessageContent>(uri, 1, 0, "QTdMessageContent", "C++ class");
+    qmlRegisterUncreatableType<QTdMessageText>(uri, 1, 0, "QTdMessageText", "C++ class");
+    qmlRegisterUncreatableType<QTdFormattedText>(uri, 1, 0, "QTdFormattedText", "C++ class");
+    qmlRegisterUncreatableType<QTdWebPage>(uri, 1, 0, "QTdWebPage", "C++ class");
 }

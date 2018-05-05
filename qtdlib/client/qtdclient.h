@@ -95,6 +95,7 @@ signals:
     void updateChatTitle(QJsonObject chat);
     void updateChatUnreadMentionCount(QJsonObject chat);
     void updateUserChatAction(QJsonObject chat);
+    void messages(QJsonObject messages);
 
 private slots:
     void handleRecv(const QJsonObject &data);

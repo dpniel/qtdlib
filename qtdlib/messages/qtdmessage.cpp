@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "client/qtdclient.h"
 #include "user/qtdusers.h"
+#include "qtdmessagecontentfactory.h"
 
 
 QTdMessage::QTdMessage(QObject *parent) : QAbstractInt64Id(parent),
@@ -9,7 +10,7 @@ QTdMessage::QTdMessage(QObject *parent) : QAbstractInt64Id(parent),
     m_sender(Q_NULLPTR), m_waitingForSender(false), m_sendingState(Q_NULLPTR),
     m_isOutgoing(false), m_canBeEdited(false), m_canBeForwarded(false),
     m_canBeDeletedOnlyForSelf(false), m_canBeDeletedForAllUsers(false),
-    m_isChannelPost(false), m_containsUnreadMention(false)
+    m_isChannelPost(false), m_containsUnreadMention(false), m_content(Q_NULLPTR)
 {
     setType(MESSAGE);
 }
@@ -71,6 +72,10 @@ void QTdMessage::unmarshalJson(const QJsonObject &json)
     m_isChannelPost = json["is_channel_post"].toBool();
     m_containsUnreadMention = json["contains_unread_mention"].toBool();
 
+    const QJsonObject content = json["content"].toObject();
+    m_content = QTdMessageContentFactory::create(content, this);
+    m_content->unmarshalJson(content);
+
     emit messageChanged();
     QAbstractInt64Id::unmarshalJson(json);
 }
@@ -113,6 +118,11 @@ bool QTdMessage::isChannelPost() const
 bool QTdMessage::containsUnreadMention() const
 {
     return m_containsUnreadMention;
+}
+
+QTdMessageContent *QTdMessage::content() const
+{
+    return m_content;
 }
 
 QString QTdMessage::summary() const

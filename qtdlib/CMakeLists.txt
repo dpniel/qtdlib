@@ -61,7 +61,12 @@ set(
     files/qtddownloadfilerequest.cpp
     files/qtdphoto.cpp
     messages/qtdmessage.cpp
+    messages/qtdmessagecontent.cpp
+    messages/qtdformattedtext.cpp
+    messages/qtdwebpage.cpp
+    messages/qtdmessagecontentfactory.cpp
     messages/qtdmessagesendingstate.cpp
+    messages/qtdmessagelistmodel.cpp
     models/QmlObjectListModel.cpp
     models/QmlVariantListModel.cpp
     notifications/qtdnotificationsettings.cpp

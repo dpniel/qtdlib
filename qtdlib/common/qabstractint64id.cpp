@@ -16,6 +16,11 @@ QString QAbstractInt64Id::qmlId() const
     return m_id.toQmlValue();
 }
 
+QJsonValue QAbstractInt64Id::jsonId() const
+{
+    return m_id.toJsonValue();
+}
+
 void QAbstractInt64Id::unmarshalJson(const QJsonObject &json)
 {
     m_id = json["id"];

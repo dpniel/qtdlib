@@ -17,6 +17,7 @@ public:
 
     qint32 id() const;
     QString qmlId() const;
+    QJsonValue jsonId() const;
 
     // QAbstractTdObject interface
     virtual void unmarshalJson(const QJsonObject &json);

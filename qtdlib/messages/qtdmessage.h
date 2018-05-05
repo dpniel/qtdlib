@@ -6,6 +6,7 @@
 #include "common/qabstractint64id.h"
 #include "user/qtduser.h"
 #include "qtdmessagesendingstate.h"
+#include "qtdmessagecontent.h"
 
 
 class QTdMessage : public QAbstractInt64Id
@@ -22,6 +23,7 @@ class QTdMessage : public QAbstractInt64Id
     Q_PROPERTY(bool canBeDeletedForAllUsers READ canBeDeletedForAllUsers NOTIFY messageChanged)
     Q_PROPERTY(bool isChannelPost READ isChannelPost NOTIFY messageChanged)
     Q_PROPERTY(bool containsUnreadMention READ containsUnreadMention NOTIFY messageChanged)
+    Q_PROPERTY(QTdMessageContent* content READ content NOTIFY messageChanged)
     // These aren't original properties of the tdlib message class but we can
     // can make life easier for use in QML.
     Q_PROPERTY(QTdUser *sender READ sender NOTIFY senderChanged)
@@ -57,6 +59,8 @@ public:
 
     bool containsUnreadMention() const;
 
+    QTdMessageContent *content() const;
+
     QString summary() const;
 
 signals:
@@ -84,6 +88,7 @@ private:
     bool m_canBeDeletedForAllUsers;
     bool m_isChannelPost;
     bool m_containsUnreadMention;
+    QTdMessageContent *m_content;
 };
 
 #endif // QTDMESSAGE_H

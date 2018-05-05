@@ -181,6 +181,10 @@ public:
      */
     Q_INVOKABLE void setTitle(const QString &title);
 
+    QJsonObject lastMessageJson() const {
+        return m_lastMsgJson;
+    }
+
 signals:
     void chatTypeChanged(QTdChatType *chatType);
     void titleChanged(QString title);
@@ -198,6 +202,7 @@ signals:
     void chatStatusChanged();
     void pinChatAction(qint64 chatId, bool pinned);
     void summaryChanged();
+    void closed();
 
 public slots:
     void updateChatOrder(const QJsonObject &json);
@@ -237,6 +242,7 @@ private:
     };
 
     QMap<qint32, useraction> m_chatActions;
+    QJsonObject m_lastMsgJson;
 };
 
 #endif // QTDCHAT_H

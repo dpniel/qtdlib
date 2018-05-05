@@ -15,6 +15,11 @@ QString QAbstractInt53Id::qmlId() const
     return m_id.toQmlValue();
 }
 
+QJsonValue QAbstractInt53Id::jsonId() const
+{
+    return m_id.toJsonValue();
+}
+
 void QAbstractInt53Id::unmarshalJson(const QJsonObject &json)
 {
     if (json.contains("id")) {

@@ -164,7 +164,7 @@ QString QTdChat::summary() const
 
 QObject *QTdChat::messages() const
 {
-    return Q_NULLPTR;
+    return m_messages;
 }
 
 void QTdChat::openChat()
@@ -179,6 +179,7 @@ void QTdChat::closeChat()
     auto *req = new QTdCloseChatRequest;
     req->setChatId(id());
     QTdClient::instance()->send(req);
+    emit closed();
 }
 
 void QTdChat::pinChat()
@@ -274,12 +275,16 @@ void QTdChat::updateLastMessage(const QJsonObject &json)
     }
 
     if (m_lastMessage) {
+        if (m_lastMessage->parent() == Q_NULLPTR) {
+            delete m_lastMessage;
+        }
         m_lastMessage = 0;
     }
 
-    auto *m = new QTdMessage();
-    m_messages->append(m);
-    m->unmarshalJson(json["last_message"].toObject());
+    m_lastMsgJson = json["last_message"].toObject();
+    auto *m = new QTdMessage(Q_NULLPTR);
+//    m_messages->append(m);
+    m->unmarshalJson(m_lastMsgJson);
     m_lastMessage = m;
     emit lastMessageChanged(m_lastMessage);
     emit summaryChanged();

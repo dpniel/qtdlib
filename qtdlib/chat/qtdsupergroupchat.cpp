@@ -218,7 +218,6 @@ void QTdSuperGroupChat::updateSuperGroup(const QJsonObject &json)
     m_restrictionReason = json["restriction_reason"].toString();
     emit superGroupChanged();
     emit chatStatusChanged();
-    openChat();
 
     // TODO: call getSuperGroupFullInfo request
     auto *req = new QTdGetSuperGroupFullInfoRequest;

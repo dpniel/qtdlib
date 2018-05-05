@@ -5,7 +5,7 @@
 #include "chat/qtdchattypefactory.h"
 
 QTdChatListModel::QTdChatListModel(QObject *parent) : QObject(parent),
-    m_model(Q_NULLPTR)
+    m_model(Q_NULLPTR), m_currentChat(Q_NULLPTR)
 {
     m_model = new QQmlObjectListModel<QTdChat>(this, "", "id");
     connect(QTdClient::instance(), &QTdClient::updateNewChat, this, &QTdChatListModel::handleUpdateNewChat);
@@ -23,6 +23,26 @@ QTdChatListModel::QTdChatListModel(QObject *parent) : QObject(parent),
 QObject *QTdChatListModel::model() const
 {
     return m_model;
+}
+
+QTdChat *QTdChatListModel::currentChat() const
+{
+    return m_currentChat;
+}
+
+void QTdChatListModel::setCurrentChat(QTdChat *currentChat)
+{
+    if (m_currentChat == currentChat)
+        return;
+
+    m_currentChat = currentChat;
+    emit currentChatChanged(m_currentChat);
+}
+
+void QTdChatListModel::clearCurrentChat()
+{
+    m_currentChat = Q_NULLPTR;
+    emit currentChatChanged(m_currentChat);
 }
 
 void QTdChatListModel::handleUpdateNewChat(const QJsonObject &chat)
@@ -82,6 +102,7 @@ void QTdChatListModel::handleAuthStateChanges(const QTdAuthState *state)
     case QTdAuthState::Type::AUTHORIZATION_STATE_READY:
     {
         QTdGetChatsRequest *req = new QTdGetChatsRequest;
+        QTdClient::instance()->send(QJsonObject{{"@type", "clearRecentlyFoundChats"}});
         QTdClient::instance()->send(req);
         break;
     }
