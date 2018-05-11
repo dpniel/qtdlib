@@ -4,7 +4,7 @@
 #include <QObject>
 #include "common/qabstracttdobject.h"
 
-class QTdLinkState : public QAbstractTdObject
+class QTdLinkState : public QTdObject
 {
     Q_OBJECT
 public:

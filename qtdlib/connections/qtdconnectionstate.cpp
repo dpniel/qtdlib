@@ -1,6 +1,6 @@
 #include "qtdconnectionstate.h"
 
-QTdConnectionState::QTdConnectionState(QObject *parent) : QAbstractTdObject(parent)
+QTdConnectionState::QTdConnectionState(QObject *parent) : QTdObject(parent)
 {
 
 }

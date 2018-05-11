@@ -1,6 +1,6 @@
 #include "qtdsecretchatstate.h"
 
-QTdSecretChatState::QTdSecretChatState(QObject *parent) : QAbstractTdObject(parent)
+QTdSecretChatState::QTdSecretChatState(QObject *parent) : QTdObject(parent)
 {
 }
 

@@ -1,6 +1,6 @@
 #include "qtdusertype.h"
 
-QTdUserType::QTdUserType(QObject *parent) : QAbstractTdObject(parent)
+QTdUserType::QTdUserType(QObject *parent) : QTdObject(parent)
 {
 }
 

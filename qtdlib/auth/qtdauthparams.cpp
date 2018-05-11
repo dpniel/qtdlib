@@ -2,7 +2,7 @@
 #include <QCoreApplication>
 #include <QStandardPaths>
 
-QTdAuthParams::QTdAuthParams(QObject *parent) : QAbstractTdObject(parent),
+QTdAuthParams::QTdAuthParams(QObject *parent) : QTdObject(parent),
     m_useTestDC(false),
     m_useFileDatabase(true),
     m_useChatInfoDatabase(true),

@@ -9,7 +9,7 @@
  *
  * https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1_connection_state.html
  */
-class QTdConnectionState : public QAbstractTdObject
+class QTdConnectionState : public QTdObject
 {
     Q_OBJECT
 public:

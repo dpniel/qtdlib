@@ -1,23 +1,23 @@
 #include "qabstracttdobject.h"
 
-QAbstractTdObject::QAbstractTdObject(QObject *parent) : QObject(parent),
+QTdObject::QTdObject(QObject *parent) : QObject(parent),
     m_type(UNKNOWN)
 {
 }
 
-QAbstractTdObject::Type QAbstractTdObject::type() const {
+QTdObject::Type QTdObject::type() const {
     return m_type;
 }
 
-void QAbstractTdObject::unmarshalJson(const QJsonObject &json) {
+void QTdObject::unmarshalJson(const QJsonObject &json) {
     Q_UNUSED(json);
 }
 
-QJsonObject QAbstractTdObject::marshalJson() {
+QJsonObject QTdObject::marshalJson() {
     return QJsonObject();
 }
 
-void QAbstractTdObject::setType(const QAbstractTdObject::Type type) {
+void QTdObject::setType(const QTdObject::Type type) {
     m_type = type;
     emit typeChanged(m_type);
 }

@@ -12,6 +12,11 @@
 #include "connections/qtdconnectionstate.h"
 #include "user/qtduser.h"
 #include "files/qtdfile.h"
+#include "files/qtdanimation.h"
+#include "files/qtdphotosize.h"
+#include "files/qtdaudio.h"
+#include "files/qtddocument.h"
+#include "files/qtdsticker.h"
 #include "messages/qtdmessage.h"
 #include "messages/qtdmessagelistmodel.h"
 #include "messages/qtdmessagecontent.h"
@@ -34,7 +39,7 @@ void QTdLib::registerQmlTypes()
     qmlRegisterType<QTdMessageListModel>(uri, 1, 0, "MessageList");
 
     // qtdlib common
-    qmlRegisterUncreatableType<QAbstractTdObject>(uri, 1, 0, "QTdObject", "Base TD c++ class");
+    qmlRegisterUncreatableType<QTdObject>(uri, 1, 0, "QTdObject", "Base TD c++ class");
 
     // qtdlib chat
     qmlRegisterUncreatableType<QTdChat>(uri, 1, 0, "QTdChat", "c++ class");
@@ -90,6 +95,12 @@ void QTdLib::registerQmlTypes()
     qmlRegisterUncreatableType<QTdFile>(uri, 1, 0, "QTdFile", "c++ class");
     qmlRegisterUncreatableType<QTdLocalFile>(uri, 1, 0, "QTdLocalFile", "c++ class");
     qmlRegisterUncreatableType<QTdRemoteFile>(uri, 1, 0, "QTdRemoteFile", "c++ class");
+    qmlRegisterUncreatableType<QTdAnimation>(uri, 1, 0, "QTdAnimation", "c++ class");
+    qmlRegisterUncreatableType<QTdPhoto>(uri, 1, 0, "QTdPhoto", "c++ class");
+    qmlRegisterUncreatableType<QTdPhotoSize>(uri, 1, 0, "QTdPhotoSize", "c++ class");
+    qmlRegisterUncreatableType<QTdAudio>(uri, 1, 0, "QTdAudio", "c++ class");
+    qmlRegisterUncreatableType<QTdDocument>(uri, 1, 0, "QTdDocument", "c++ class");
+    qmlRegisterUncreatableType<QTdSticker>(uri, 1, 0, "QTdSticker", "c++ class");
 
     // qtdlib notifications
     qmlRegisterUncreatableType<QTdNotificationSettings>(uri, 1, 0, "QTdNotificationSettings", "C++ class");

@@ -3,7 +3,7 @@
 
 #include "common/qabstracttdobject.h"
 
-class QTdUserType : public QAbstractTdObject
+class QTdUserType : public QTdObject
 {
     Q_OBJECT
 public:

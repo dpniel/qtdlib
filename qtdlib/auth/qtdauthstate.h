@@ -10,11 +10,11 @@
  *
  * https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1_authorization_state.html
  */
-class QTdAuthState : public QAbstractTdObject
+class QTdAuthState : public QTdObject
 {
     Q_OBJECT
 public:
-    explicit QTdAuthState(QObject *parent = Q_NULLPTR) : QAbstractTdObject(parent) {}
+    explicit QTdAuthState(QObject *parent = Q_NULLPTR) : QTdObject(parent) {}
 };
 
 /**

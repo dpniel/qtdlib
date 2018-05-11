@@ -4,7 +4,7 @@
 #include <QObject>
 #include "common/qabstracttdobject.h"
 
-class QTdAuthParams : public QAbstractTdObject
+class QTdAuthParams : public QTdObject
 {
     Q_OBJECT
     Q_PROPERTY(bool useTestDC READ useTestDC WRITE setUseTestDC NOTIFY useTstDCChanged)

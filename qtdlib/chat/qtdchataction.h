@@ -4,7 +4,7 @@
 #include <QObject>
 #include "common/qabstracttdobject.h"
 
-class QTdChatAction : public QAbstractTdObject
+class QTdChatAction : public QTdObject
 {
     Q_OBJECT
 public:

@@ -1,6 +1,6 @@
 #include "qtdmessagesendingstate.h"
 
-QTdMessageSendingState::QTdMessageSendingState(QObject *parent) : QAbstractTdObject(parent)
+QTdMessageSendingState::QTdMessageSendingState(QObject *parent) : QTdObject(parent)
 {
 }
 

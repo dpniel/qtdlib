@@ -1,7 +1,7 @@
 #include "qabstractint64id.h"
 #include <QDebug>
 
-QAbstractInt64Id::QAbstractInt64Id(QObject *parent): QAbstractTdObject(parent),
+QAbstractInt64Id::QAbstractInt64Id(QObject *parent): QTdObject(parent),
     m_id(0)
 {
 }
@@ -25,7 +25,7 @@ void QAbstractInt64Id::unmarshalJson(const QJsonObject &json)
 {
     m_id = json["id"];
     emit idChanged(m_id.value());
-    QAbstractTdObject::unmarshalJson(json);
+    QTdObject::unmarshalJson(json);
 }
 
 QAbstractInt64Id *QAbstractInt64Id::create(const QJsonObject &json, QObject *parent)

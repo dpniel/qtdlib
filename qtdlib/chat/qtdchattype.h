@@ -10,7 +10,7 @@
  *
  * https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1_chat_type.html
  */
-class QTdChatType : public QAbstractTdObject
+class QTdChatType : public QTdObject
 {
     Q_OBJECT
 public:

@@ -10,7 +10,7 @@
  *
  * https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1_authentication_code_type.html
  */
-class QTdAuthCode : public QAbstractTdObject
+class QTdAuthCode : public QTdObject
 {
     Q_OBJECT
 public:
@@ -109,7 +109,7 @@ private:
  *
  * https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1authentication_code_info.html
  */
-class QTdAuthCodeInfo : public QAbstractTdObject {
+class QTdAuthCodeInfo : public QTdObject {
     Q_OBJECT
     Q_PROPERTY(QString timeout READ qmlTimeout NOTIFY infoChanged)
     Q_PROPERTY(QTdAuthCode *type READ type NOTIFY infoChanged)

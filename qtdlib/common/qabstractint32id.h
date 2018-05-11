@@ -5,7 +5,7 @@
 #include "qabstracttdobject.h"
 #include "qtdint.h"
 
-class QAbstractInt32Id : public QAbstractTdObject
+class QAbstractInt32Id : public QTdObject
 {
     Q_OBJECT
     // We expose all ID's as strings to qml to make sure

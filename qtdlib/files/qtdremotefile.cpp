@@ -1,6 +1,6 @@
 #include "qtdremotefile.h"
 
-QTdRemoteFile::QTdRemoteFile(QObject *parent) : QAbstractTdObject(parent),
+QTdRemoteFile::QTdRemoteFile(QObject *parent) : QTdObject(parent),
     m_isUploadingActive(false), m_isUploadingCompleted(false),
     m_uploadedSize(0)
 {

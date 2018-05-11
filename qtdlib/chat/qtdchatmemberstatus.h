@@ -10,7 +10,7 @@
  *
  * https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1_chat_member_status.html
  */
-class QTdChatMemberStatus : public QAbstractTdObject
+class QTdChatMemberStatus : public QTdObject
 {
     Q_OBJECT
 public:

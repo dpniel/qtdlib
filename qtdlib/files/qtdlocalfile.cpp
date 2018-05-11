@@ -1,6 +1,6 @@
 #include "qtdlocalfile.h"
 
-QTdLocalFile::QTdLocalFile(QObject *parent) : QAbstractTdObject(parent),
+QTdLocalFile::QTdLocalFile(QObject *parent) : QTdObject(parent),
     m_canBeDownloaded(false), m_canBeDeleted(false),
     m_isDownloadingActive(false), m_isDownloadingCompleted(false),
     m_prefixSize(0), m_size(0)
@@ -69,5 +69,5 @@ void QTdLocalFile::unmarshalJson(const QJsonObject &json)
     emit downloadedPrefixSizeChanged();
     m_size = json["downloaded_size"];
     emit downloadedSizeChanged();
-    QAbstractTdObject::unmarshalJson(json);
+    QTdObject::unmarshalJson(json);
 }

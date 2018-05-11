@@ -1,6 +1,6 @@
 #include "qabstractint32id.h"
 
-QAbstractInt32Id::QAbstractInt32Id(QObject *parent) : QAbstractTdObject(parent)
+QAbstractInt32Id::QAbstractInt32Id(QObject *parent) : QTdObject(parent)
 {
 }
 
@@ -24,7 +24,7 @@ void QAbstractInt32Id::unmarshalJson(const QJsonObject &json)
     if (json.contains("id")) {
         m_id = json["id"];
     }
-    QAbstractTdObject::unmarshalJson(json);
+    QTdObject::unmarshalJson(json);
 }
 
 QAbstractInt32Id *QAbstractInt32Id::create(const QJsonObject &json, QObject *parent)

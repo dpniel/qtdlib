@@ -1,5 +1,5 @@
 #include "qtdrequest.h"
 
-QTdRequest::QTdRequest(QObject *parent) : QAbstractTdObject(parent)
+QTdRequest::QTdRequest(QObject *parent) : QTdObject(parent)
 {
 }

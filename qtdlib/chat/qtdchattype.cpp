@@ -1,6 +1,6 @@
 #include "qtdchattype.h"
 
-QTdChatType::QTdChatType(QObject *parent) : QAbstractTdObject(parent)
+QTdChatType::QTdChatType(QObject *parent) : QTdObject(parent)
 {
 }
 

@@ -4,7 +4,7 @@
 #include <QObject>
 #include "qabstracttdobject.h"
 
-class QTdRequest : public QAbstractTdObject
+class QTdRequest : public QTdObject
 {
     Q_OBJECT
 public:

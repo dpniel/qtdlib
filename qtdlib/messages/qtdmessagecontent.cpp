@@ -1,8 +1,7 @@
 #include "qtdmessagecontent.h"
 
-QTdMessageContent::QTdMessageContent(QObject *parent) : QAbstractTdObject(parent)
+QTdMessageContent::QTdMessageContent(QObject *parent) : QTdObject(parent)
 {
-
 }
 
 QTdMessageText::QTdMessageText(QObject *parent) : QTdMessageContent(parent),
@@ -26,8 +25,8 @@ void QTdMessageText::unmarshalJson(const QJsonObject &json)
     m_text = new QTdFormattedText(this);
     m_text->unmarshalJson(json["text"].toObject());
     if (json.contains("web_page")) {
-//        m_webPage = new QTdWebPage(this);
-//        m_webPage->unmarshalJson(json["web_page"].toObject());
+        m_webPage = new QTdWebPage(this);
+        m_webPage->unmarshalJson(json["web_page"].toObject());
     }
     emit dataChanged();
 }

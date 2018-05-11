@@ -5,19 +5,19 @@
 #include <QJsonObject>
 
 /**
- * @brief The QAbstractTdObject class
+ * @brief The QTdObject class
  *
  * Abstract base class all tdlib objects should inherit.
  *
  * All subclasses should call setType() during construction to indicate
  * the message type the class represents.
  */
-class QAbstractTdObject : public QObject
+class QTdObject : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(Type type READ type NOTIFY typeChanged)
 public:
-    explicit QAbstractTdObject(QObject *parent = nullptr);
+    explicit QTdObject(QObject *parent = nullptr);
 
     /**
      * @brief Telegram Message Types
@@ -110,6 +110,8 @@ public:
         TEXT_ENTITY_TYPE_PRE_CODE,
         TEXT_ENTITY_TYPE_TEXT_URL,
         TEXT_ENTITY_TYPE_MENTION_NAME,
+        TEXT_ENTITY_TYPE_PHONE_NUMBER,
+        TEXT_ENTITY_TYPE_CASHTAG,
         USER,
         USER_STATUS_EMPTY,
         USER_STATUS_LAST_MONTH,

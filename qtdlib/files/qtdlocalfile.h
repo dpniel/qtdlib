@@ -5,7 +5,7 @@
 #include "common/qabstracttdobject.h"
 #include "common/qtdint.h"
 
-class QTdLocalFile : public QAbstractTdObject
+class QTdLocalFile : public QTdObject
 {
     Q_OBJECT
     Q_PROPERTY(QString path READ path NOTIFY pathChanged)

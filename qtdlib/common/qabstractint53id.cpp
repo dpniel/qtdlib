@@ -1,6 +1,6 @@
 #include "qabstractint53id.h"
 
-QAbstractInt53Id::QAbstractInt53Id(QObject *parent) : QAbstractTdObject(parent)
+QAbstractInt53Id::QAbstractInt53Id(QObject *parent) : QTdObject(parent)
 {
 
 }
@@ -25,7 +25,7 @@ void QAbstractInt53Id::unmarshalJson(const QJsonObject &json)
     if (json.contains("id")) {
         m_id = json["id"];
     }
-    QAbstractTdObject::unmarshalJson(json);
+    QTdObject::unmarshalJson(json);
 }
 
 QAbstractInt53Id *QAbstractInt53Id::create(const QJsonObject &json, QObject *parent)

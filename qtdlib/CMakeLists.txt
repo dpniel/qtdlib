@@ -56,10 +56,17 @@ set(
     connections/qtdconnectionstate.cpp
     connections/qtdconnectionstatefactory.cpp
     files/qtdfile.cpp
+    files/qtdaudio.cpp
     files/qtdlocalfile.cpp
     files/qtdremotefile.cpp
     files/qtddownloadfilerequest.cpp
+    files/qtddocument.cpp
     files/qtdphoto.cpp
+    files/qtdphotosize.cpp
+    files/qtdanimation.cpp
+    files/qtdsticker.cpp
+    messages/qtdtextentity.cpp
+    messages/qtdtextentitytype.cpp
     messages/qtdmessage.cpp
     messages/qtdmessagecontent.cpp
     messages/qtdformattedtext.cpp

@@ -3,7 +3,7 @@
 #include "client/qtdclient.h"
 #include "qtdchatactionfactory.h"
 
-QTdChatMember::QTdChatMember(QObject *parent) : QAbstractTdObject(parent),
+QTdChatMember::QTdChatMember(QObject *parent) : QTdObject(parent),
     m_userId(0), m_inviteUserId(0), m_joinedChatDate(0), m_status(Q_NULLPTR),
     m_waitingForUser(false)
 {

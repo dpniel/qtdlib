@@ -9,7 +9,7 @@
  *
  * https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1_user_status.html
  */
-class QTdUserStatus : public QAbstractTdObject
+class QTdUserStatus : public QTdObject
 {
     Q_OBJECT
 public:

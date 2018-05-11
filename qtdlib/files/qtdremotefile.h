@@ -5,7 +5,7 @@
 #include "common/qabstracttdobject.h"
 #include "common/qtdint.h"
 
-class QTdRemoteFile : public QAbstractTdObject
+class QTdRemoteFile : public QTdObject
 {
     Q_OBJECT
     Q_PROPERTY(QString id READ id NOTIFY idChanged)

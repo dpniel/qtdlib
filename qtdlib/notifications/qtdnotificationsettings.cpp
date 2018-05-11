@@ -1,6 +1,6 @@
 #include "qtdnotificationsettings.h"
 
-QTdNotificationSettings::QTdNotificationSettings(QObject *parent) : QAbstractTdObject(parent),
+QTdNotificationSettings::QTdNotificationSettings(QObject *parent) : QTdObject(parent),
     m_muteFor(0), m_showPreview(false)
 {
     setType(NOTIFICATION_SETTINGS);
@@ -24,5 +24,5 @@ void QTdNotificationSettings::unmarshalJson(const QJsonObject &json)
     m_showPreview = json["show_preview"].toBool();
     emit showPreviewChanged(m_showPreview);
 
-    QAbstractTdObject::unmarshalJson(json);
+    QTdObject::unmarshalJson(json);
 }

@@ -1,6 +1,6 @@
 #include "qtdchatmemberstatus.h"
 
-QTdChatMemberStatus::QTdChatMemberStatus(QObject *parent) : QAbstractTdObject(parent)
+QTdChatMemberStatus::QTdChatMemberStatus(QObject *parent) : QTdObject(parent)
 {
 }
 

@@ -6,7 +6,7 @@
 #include "qtdformattedtext.h"
 #include "qtdwebpage.h"
 
-class QTdMessageContent : public QAbstractTdObject
+class QTdMessageContent : public QTdObject
 {
     Q_OBJECT
 public:

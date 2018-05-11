@@ -12,7 +12,7 @@
  *
  * https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1chat_member.html
  */
-class QTdChatMember : public QAbstractTdObject
+class QTdChatMember : public QTdObject
 {
     Q_OBJECT
     Q_PROPERTY(QString userId READ qmlUserId NOTIFY chatMemberChanged)

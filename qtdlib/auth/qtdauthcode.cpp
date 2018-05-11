@@ -1,7 +1,7 @@
 #include "qtdauthcode.h"
 #include <QDebug>
 
-QTdAuthCode::QTdAuthCode(QObject *parent) : QAbstractTdObject(parent)
+QTdAuthCode::QTdAuthCode(QObject *parent) : QTdObject(parent)
 {
 
 }
@@ -101,7 +101,7 @@ void QTdAuthCodeFlashCall::unmarshalJson(const QJsonObject &json)
     QTdAuthCode::unmarshalJson(json);
 }
 
-QTdAuthCodeInfo::QTdAuthCodeInfo(QObject *parent) : QAbstractTdObject(parent),
+QTdAuthCodeInfo::QTdAuthCodeInfo(QObject *parent) : QTdObject(parent),
     m_timeout(0), m_type(0), m_nextType(0)
 {
 }

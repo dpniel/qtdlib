@@ -1,6 +1,6 @@
 #include "qtdlinkstate.h"
 
-QTdLinkState::QTdLinkState(QObject *parent) : QAbstractTdObject(parent)
+QTdLinkState::QTdLinkState(QObject *parent) : QTdObject(parent)
 {
 }
 

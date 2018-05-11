@@ -1,6 +1,6 @@
 #include "qtdchataction.h"
 
-QTdChatAction::QTdChatAction(QObject *parent) : QAbstractTdObject(parent)
+QTdChatAction::QTdChatAction(QObject *parent) : QTdObject(parent)
 {
 }
 
