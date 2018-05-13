@@ -21,6 +21,8 @@
 #include "messages/qtdmessagelistmodel.h"
 #include "messages/qtdmessagecontent.h"
 
+#include "utils/qtdtextformatter.h"
+
 void QTdLib::registerQmlTypes()
 {
     static bool registered = false;
@@ -37,6 +39,8 @@ void QTdLib::registerQmlTypes()
     qmlRegisterType<QTdChatListModel>(uri, 1, 0, "ChatList");
     qmlRegisterType<QTdChatListSortFilterModel>(uri, 1, 0, "SortedChatList");
     qmlRegisterType<QTdMessageListModel>(uri, 1, 0, "MessageList");
+
+    qmlRegisterType<QTdTextFormatter>(uri, 1, 0, "TextFormatter");
 
     // qtdlib common
     qmlRegisterUncreatableType<QTdObject>(uri, 1, 0, "QTdObject", "Base TD c++ class");
@@ -81,7 +85,7 @@ void QTdLib::registerQmlTypes()
     qmlRegisterUncreatableType<QTdUserStatusOnline>(uri, 1, 0, "QTdUserStatusOnline", "c++ class");
     qmlRegisterUncreatableType<QTdUserStatusRecently>(uri, 1, 0, "QTdUserStatusRecently", "c++ class");
     qmlRegisterUncreatableType<QTdProfilePhoto>(uri, 1, 0, "QTdProfilePhoto", "c++ class");
-    qmlRegisterUncreatableType<QTdLinkState>(uri, 1, 0, "QTdProfilePhoto", "Abstract class");
+    qmlRegisterUncreatableType<QTdLinkState>(uri, 1, 0, "QTdLinkState", "Abstract class");
     qmlRegisterUncreatableType<QTdLinkStateIsContact>(uri, 1, 0, "QTdLinkStateIsContact", "c++ class");
     qmlRegisterUncreatableType<QTdLinkStateKnowsPhoneNumber>(uri, 1, 0, "QTdLinkStateKnowsPhoneNumber", "c++ class");
     qmlRegisterUncreatableType<QTdLinkStateNone>(uri, 1, 0, "QTdLinkStateNone", "c++ class");

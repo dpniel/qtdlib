@@ -10,7 +10,7 @@ class QTdFormattedText : public QTdObject
 {
     Q_OBJECT
     Q_PROPERTY(QString text READ text NOTIFY textChanged)
-    Q_PROPERTY(QObject entities READ qmlEntities NOTIFY entitiesChanged)
+    Q_PROPERTY(QObject* entities READ qmlEntities NOTIFY entitiesChanged)
 public:
     explicit QTdFormattedText(QObject *parent = nullptr);
 

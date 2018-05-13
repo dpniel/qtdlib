@@ -16,7 +16,7 @@ qint32 QTdTextEntity::length() const
     return m_length;
 }
 
-QTdTextEntityType *QTdTextEntity::type() const
+QTdTextEntityType *QTdTextEntity::entityType() const
 {
     return m_type;
 }

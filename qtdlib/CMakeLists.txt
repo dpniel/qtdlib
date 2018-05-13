@@ -62,6 +62,7 @@ set(
     files/qtddownloadfilerequest.cpp
     files/qtddocument.cpp
     files/qtdphoto.cpp
+    files/qtdphotos.cpp
     files/qtdphotosize.cpp
     files/qtdanimation.cpp
     files/qtdsticker.cpp
@@ -86,6 +87,7 @@ set(
     user/qtduserstatusfactory.cpp
     user/qtdprofilephoto.cpp
     user/requests/qtdblockuserrequest.cpp
+    utils/qtdtextformatter.cpp
     quick/plugin.cpp
     quick/users.cpp
 )

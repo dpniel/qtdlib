@@ -42,17 +42,13 @@ QTdRemoteFile *QTdFile::remote() const
 
 void QTdFile::unmarshalJson(const QJsonObject &json)
 {
-    if (m_local) {
-        delete m_local;
-        m_local = 0;
+    if (!m_local) {
+        m_local = new QTdLocalFile(this);
     }
-    m_local = new QTdLocalFile(this);
     m_local->unmarshalJson(json["local"].toObject());
-    if (m_remote) {
-        delete m_remote;
-        m_remote = 0;
+    if (!m_remote) {
+        m_remote = new QTdRemoteFile(this);
     }
-    m_remote = new QTdRemoteFile(this);
     m_remote->unmarshalJson(json["remote"].toObject());
     m_size = json["size"];
     m_expectedSize = json["expected_size"];
@@ -77,5 +73,6 @@ void QTdFile::handleUpdateFile(const QJsonObject &json)
     if (qint32(json["id"].toInt()) != this->id()) {
         return;
     }
+    qDebug() << "UPDATING FILE:" << this->id();
     this->unmarshalJson(json);
 }

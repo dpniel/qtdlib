@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "common/qabstracttdobject.h"
-#include "files/qtdphoto.h"
+#include "files/qtdphotos.h"
 #include "files/qtdanimation.h"
 #include "files/qtdaudio.h"
 #include "files/qtddocument.h"
@@ -18,7 +18,7 @@ class QTdWebPage : public QTdObject
     Q_PROPERTY(QString siteName READ siteName NOTIFY webPageChanged)
     Q_PROPERTY(QString title READ title NOTIFY webPageChanged)
     Q_PROPERTY(QString description READ description NOTIFY webPageChanged)
-    Q_PROPERTY(QTdPhoto* photo READ photo NOTIFY webPageChanged)
+    Q_PROPERTY(QTdPhotos* photo READ photo NOTIFY webPageChanged)
     Q_PROPERTY(QString embedUrl READ embedUrl NOTIFY webPageChanged)
     Q_PROPERTY(QString embedType READ embedType NOTIFY webPageChanged)
     Q_PROPERTY(qint32 embedWidth READ embedWidth NOTIFY webPageChanged)
@@ -48,7 +48,7 @@ public:
 
     QString description() const;
 
-    QTdPhoto *photo() const;
+    QTdPhotos *photo() const;
 
     QString embedUrl() const;
 
@@ -84,7 +84,7 @@ private:
     QString m_siteName;
     QString m_title;
     QString m_description;
-    QTdPhoto* m_photo;
+    QTdPhotos* m_photo;
     QString m_embedUrl;
     QString m_embedType;
     qint32 m_embedWidth;

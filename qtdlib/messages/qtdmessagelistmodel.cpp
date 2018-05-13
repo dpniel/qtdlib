@@ -71,9 +71,13 @@ void QTdMessageListModel::handleMessages(const QJsonObject &json)
     QJsonArray messages = json["messages"].toArray();
     for (const QJsonValue &msgData : messages) {
         const QJsonObject data = msgData.toObject();
-        auto *message = new QTdMessage;
-        message->unmarshalJson(data);
-        m_model->append(message);
+        const qint64 mid = qint64(data["id"].toDouble());
+        auto *msg = m_model->getByUid(QString::number(mid));
+        if (!msg) {
+            auto *message = new QTdMessage;
+            message->unmarshalJson(data);
+            m_model->append(message);
+        }
     }
 }
 

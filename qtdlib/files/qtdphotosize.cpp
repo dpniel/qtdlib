@@ -32,6 +32,9 @@ void QTdPhotoSize::unmarshalJson(const QJsonObject &json)
     m_type = json["type"].toString();
     m_photo = new QTdFile(this);
     m_photo->unmarshalJson(json["photo"].toObject());
+    if (m_photo->local()->path().isEmpty()) {
+        m_photo->downloadFile();
+    }
     m_width = qint32(json["width"].toInt());
     m_height = qint32(json["height"].toInt());
     emit photoSizeChanged();

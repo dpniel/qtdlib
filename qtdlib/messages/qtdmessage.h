@@ -63,12 +63,12 @@ public:
 
     QString summary() const;
 
+    Q_INVOKABLE QString formatDate(const QDateTime &dt);
+
 signals:
     void messageChanged();
     void senderChanged();
     void sendingStateChanged();
-
-public slots:
 
 private slots:
     void updateSender(const qint32 &senderId);

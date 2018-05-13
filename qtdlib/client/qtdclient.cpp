@@ -155,6 +155,10 @@ void QTdClient::init()
         emit updateFile(data["file"].toObject());
     });
 
+    m_events.insert(QStringLiteral("file"), [=](const QJsonObject &data){
+        emit updateFile(data);
+    });
+
     m_events.insert(QStringLiteral("updateNewChat"), [=](const QJsonObject &data){
         emit updateNewChat(data["chat"].toObject());
     });

@@ -38,7 +38,7 @@ QString QTdWebPage::description() const
     return m_description;
 }
 
-QTdPhoto *QTdWebPage::photo() const
+QTdPhotos *QTdWebPage::photo() const
 {
     return m_photo;
 }
@@ -107,7 +107,7 @@ void QTdWebPage::unmarshalJson(const QJsonObject &json)
     m_title = json["title"].toString();
     m_description = json["description"].toString();
     if (json.contains("photo")) {
-        m_photo = new QTdPhoto(this);
+        m_photo = new QTdPhotos(this);
         m_photo->unmarshalJson(json["photo"].toObject());
     }
     m_embedUrl = json["embed_url"].toString();

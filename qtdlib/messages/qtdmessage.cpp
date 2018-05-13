@@ -138,6 +138,16 @@ QString QTdMessage::summary() const
     return QString("%1: %2").arg(name, QStringLiteral("Sent a message"));
 }
 
+QString QTdMessage::formatDate(const QDateTime &dt)
+{
+    const QDateTime now = QDateTime::currentDateTimeUtc().toLocalTime();
+    const QDateTime localdt = dt.toLocalTime();
+    if (now.daysTo(localdt) == 0) {
+        return localdt.toString("hh:mm");
+    }
+    return localdt.toString("ddd hh:mm");
+}
+
 void QTdMessage::updateSender(const qint32 &senderId)
 {
     if (senderId != m_sender_user_id.value()) {
