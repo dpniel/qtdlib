@@ -313,15 +313,15 @@ void QTdChat::updateChatAction(const QJsonObject &json)
         case QTdChatAction::Type::CHAT_ACTION_CANCEL:
             return;
         case QTdChatAction::Type::CHAT_ACTION_CHOOSING_CONTACT:
-            description = QStringLiteral("is choosing contact");
+            description = QStringLiteral("is choosing contact...");
             break;
         case QTdChatAction::Type::CHAT_ACTION_CHOOSING_LOCATION:
-            description = QStringLiteral("is choosing location");
+            description = QStringLiteral("is choosing location...");
             break;
         case QTdChatAction::Type::CHAT_ACTION_RECORDING_VIDEO:
         case QTdChatAction::Type::CHAT_ACTION_RECORDING_VIDEO_NOTE:
         case QTdChatAction::Type::CHAT_ACTION_RECORDING_VOICE_NOTE:
-            description = QStringLiteral("is recording");
+            description = QStringLiteral("is recording...");
             break;
         case QTdChatAction::Type::CHAT_ACTION_TYPING:
             description = QStringLiteral("is typing...");

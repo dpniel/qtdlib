@@ -45,9 +45,9 @@ void QTdUsers::handleUpdateUser(const QJsonObject &user)
         m_model->append(tduser);
         emit userCreated(uid);
         qDebug() << "USERCOUNT: " << m_model->count();
+    } else {
+        tduser->unmarshalJson(user);
     }
-    tduser->unmarshalJson(user);
-    qDebug() << "[USERNAME] >> " << tduser->username();
 }
 
 void QTdUsers::handleUpdateUserStatus(const QString &userId, const QJsonObject &status)

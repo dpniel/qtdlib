@@ -28,8 +28,7 @@ void QTdUser::unmarshalJson(const QJsonObject &json)
     emit languageCodeChanged(m_languageCode);
 
     if (m_userType) {
-        delete m_userType;
-        m_userType = 0;
+        m_userType->deleteLater();
     }
     const QJsonObject typeObj = json["type"].toObject();
     const QString type = typeObj["@type"].toString();
@@ -43,11 +42,12 @@ void QTdUser::unmarshalJson(const QJsonObject &json)
     } else if (type == "userTypeUnknown") {
         m_userType = new QTdUserTypeUnknown(this);
     }
-    m_userType->unmarshalJson(typeObj);
+    if (m_userType) {
+        m_userType->unmarshalJson(typeObj);
+    }
 
     if (m_profilePhoto) {
-        delete m_profilePhoto;
-        m_profilePhoto = 0;
+        m_profilePhoto->deleteLater();
     }
     m_profilePhoto = new QTdProfilePhoto(this);
     m_profilePhoto->unmarshalJson(json["profile_photo"].toObject());
@@ -59,15 +59,13 @@ void QTdUser::unmarshalJson(const QJsonObject &json)
     }
 
     if (m_outgoingLink) {
-        delete m_outgoingLink;
-        m_outgoingLink = 0;
+        m_outgoingLink->deleteLater();
     }
     m_outgoingLink = QTdLinkStateFactory::create(json["outgoing_link"].toObject(), this);
     emit outgoingLinkChanged(m_outgoingLink);
 
     if (m_incomingLink) {
-        delete m_incomingLink;
-        m_incomingLink = 0;
+        m_incomingLink->deleteLater();
     }
     m_incomingLink = QTdLinkStateFactory::create(json["incoming_link"].toObject(), this);
     emit incomingLinkChanged(m_incomingLink);
@@ -154,8 +152,7 @@ void QTdUser::setPhoneNumber(QString phoneNumber)
 void QTdUser::setStatus(QTdUserStatus *status)
 {
     if (m_status) {
-        delete m_status;
-        m_status = 0;
+        m_status->deleteLater();
     }
     m_status = status;
     emit statusChanged(m_status);

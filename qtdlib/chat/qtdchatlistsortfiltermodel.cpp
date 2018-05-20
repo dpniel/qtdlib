@@ -54,43 +54,44 @@ bool QTdChatListSortFilterModel::filterAcceptsRow(int source_row, const QModelIn
     // So first we need to get rid of the chats with status banned or left
     QQmlObjectListModel<QTdChat> *model = static_cast<QQmlObjectListModel<QTdChat>*>(sourceModel());
     QTdChat *chat = model->at(source_row);
-    if (chat) {
-        switch(chat->chatType()->type()) {
-        case QTdChatType::Type::CHAT_TYPE_BASIC_GROUP:
-        {
-            QTdBasicGroupChat *gc = static_cast<QTdBasicGroupChat*>(chat);
-            if (!gc->status()) {
-                return true;
-            }
-            switch(gc->status()->type()) {
-            case QTdChatMemberStatus::Type::CHAT_MEMBER_STATUS_LEFT:
-            case QTdChatMemberStatus::Type::CHAT_MEMBER_STATUS_BANNED:
-                return false;
-            default:
-                break;
-            }
-            break;
+    if (!chat) {
+        return false;
+    }
+
+    switch(chat->chatType()->type()) {
+    case QTdChatType::Type::CHAT_TYPE_BASIC_GROUP:
+    {
+        QTdBasicGroupChat *gc = static_cast<QTdBasicGroupChat*>(chat);
+        if (!gc->status()) {
+            return true;
         }
-        case QTdChatType::Type::CHAT_TYPE_SUPERGROUP:
-        {
-            QTdSuperGroupChat *gc = static_cast<QTdSuperGroupChat*>(chat);
-            if (!gc->status()) {
-                return true;
-            }
-            switch(gc->status()->type()) {
-            case QTdChatMemberStatus::Type::CHAT_MEMBER_STATUS_LEFT:
-            case QTdChatMemberStatus::Type::CHAT_MEMBER_STATUS_BANNED:
-                return false;
-            default:
-                break;
-            }
-            break;
-        }
+        switch(gc->status()->type()) {
+        case QTdChatMemberStatus::Type::CHAT_MEMBER_STATUS_LEFT:
+        case QTdChatMemberStatus::Type::CHAT_MEMBER_STATUS_BANNED:
+            return false;
         default:
             break;
         }
+        break;
     }
-
+    case QTdChatType::Type::CHAT_TYPE_SUPERGROUP:
+    {
+        QTdSuperGroupChat *gc = static_cast<QTdSuperGroupChat*>(chat);
+        if (!gc->status()) {
+            return true;
+        }
+        switch(gc->status()->type()) {
+        case QTdChatMemberStatus::Type::CHAT_MEMBER_STATUS_LEFT:
+        case QTdChatMemberStatus::Type::CHAT_MEMBER_STATUS_BANNED:
+            return false;
+        default:
+            break;
+        }
+        break;
+    }
+    default:
+        break;
+    }
     // If current chats is defined we are just going to show all the remaining chats
     // after the filtering above has been applied. Otherwise filter on a per chat
     // basis filtering on the remaining filters.

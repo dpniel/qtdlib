@@ -19,9 +19,15 @@ QTdFile *QTdPhoto::big() const
 
 void QTdPhoto::unmarshalJson(const QJsonObject &json)
 {
+    if (m_small) {
+        m_small->deleteLater();
+    }
     m_small = new QTdFile(this);
     m_small->unmarshalJson(json["small"].toObject());
     emit smallChanged(m_small);
+    if (m_big) {
+        m_big->deleteLater();
+    }
     m_big = new QTdFile(this);
     m_big->unmarshalJson(json["big"].toObject());
     emit bigChanged(m_big);
