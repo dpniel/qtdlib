@@ -9,6 +9,11 @@ QTdPhotos::QTdPhotos(QObject *parent) : QAbstractInt64Id(parent),
     m_sizes = new QQmlObjectListModel<QTdPhotoSize>(this, "", "type");
 }
 
+QTdPhotos::~QTdPhotos()
+{
+    m_sizes->clear();
+}
+
 void QTdPhotos::unmarshalJson(const QJsonObject &json)
 {
     m_hasSitckers = json["has_stickers"].toBool();

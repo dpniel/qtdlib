@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMap>
+#include <QPointer>
 #include "qtdchat.h"
 #include "qtdchatmemberstatus.h"
 #include "qtdchatmember.h"
@@ -43,20 +44,24 @@ signals:
     void groupChanged();
     void groupInfoChanged();
 
+protected:
+    virtual void onChatOpened();
+
 private slots:
     void requestGroupData();
     void updateGroupData(const QJsonObject &json);
     void updateGroupInfo(const QJsonObject &json);
 
 private:
+    Q_DISABLE_COPY(QTdBasicGroupChat)
     QTdInt32 m_groupId;
     QTdInt32 m_memberCount;
-    QTdChatMemberStatus *m_status;
+    QPointer<QTdChatMemberStatus> m_status;
     bool m_everyoneIsAdmin;
     bool m_isActive;
     QTdInt32 m_upgradedSGID;
     QTdInt32 m_creatorId;
-    QQmlObjectListModel<QTdChatMember> *m_members;
+    QPointer<QQmlObjectListModel<QTdChatMember>> m_members;
     QString m_inviteLink;
 };
 

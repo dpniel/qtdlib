@@ -12,6 +12,7 @@ class QTdUsers : public QObject
     Q_PROPERTY(QObject* model READ qmlModel NOTIFY modelChanged)
 public:
     explicit QTdUsers(QObject *parent = nullptr);
+    ~QTdUsers();
 
     static QTdUsers  *instance();
 
@@ -21,13 +22,13 @@ public:
 signals:
     void modelChanged(QObject* model);
     void userCreated(qint32 id);
-public slots:
 
 private slots:
     void handleUpdateUser(const QJsonObject &user);
     void handleUpdateUserStatus(const QString &userId, const QJsonObject &status);
 
 private:
+    Q_DISABLE_COPY(QTdUsers)
     QQmlObjectListModel<QTdUser> *m_model;
 };
 

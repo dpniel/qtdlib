@@ -3,9 +3,8 @@
 
 #include "qtdauthstate.h"
 
-class QTdAuthStateFactory
+struct QTdAuthStateFactory
 {
-public:
     static QTdAuthState *create(const QJsonObject &data, QObject *parent);
 };
 

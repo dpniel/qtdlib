@@ -2,10 +2,11 @@
 #define QTDPHOTO_H
 
 #include <QObject>
+#include <QScopedPointer>
 #include "common/qabstractint64id.h"
 #include "qtdfile.h"
 
-class QTdPhoto : public QAbstractInt64Id
+class QTdPhoto : public QTdObject
 {
     Q_OBJECT
     Q_PROPERTY(QTdFile* small READ small NOTIFY smallChanged)
@@ -29,8 +30,8 @@ signals:
     void bigChanged(QTdFile* big);
 
 private:
-    QTdFile* m_small;
-    QTdFile* m_big;
+    QScopedPointer<QTdFile> m_small;
+    QScopedPointer<QTdFile> m_big;
 };
 
 #endif // QTDPHOTO_H

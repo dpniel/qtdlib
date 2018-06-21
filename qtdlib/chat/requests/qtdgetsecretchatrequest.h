@@ -13,6 +13,7 @@ public:
     void setSecretChatId(const qint32 &id);
     QJsonObject marshalJson() Q_DECL_FINAL;
 private:
+    Q_DISABLE_COPY(QTdGetSecretChatRequest)
     qint32 m_chatId;
 };
 

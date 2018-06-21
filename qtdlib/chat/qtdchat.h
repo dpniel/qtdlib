@@ -2,6 +2,8 @@
 #define QTDCHAT_H
 
 #include <QObject>
+#include <QPointer>
+#include <QScopedPointer>
 #include "common/qabstractint64id.h"
 #include "qtdchattype.h"
 #include "messages/qtdmessage.h"
@@ -12,6 +14,7 @@
 class QTdChatPhoto : public QTdPhoto
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatPhoto)
 public:
     explicit QTdChatPhoto(QObject *parent = Q_NULLPTR);
 };
@@ -217,14 +220,17 @@ public slots:
     void handleUpdateChatAction(const QJsonObject &json);
 
 protected:
+    virtual void onChatOpened();
+    virtual void onChatClosed();
     virtual void updateChatAction(const QJsonObject &json);
-    QQmlObjectListModel<QTdMessage> *m_messages;
+    QPointer<QQmlObjectListModel<QTdMessage>> m_messages;
 
 private:
-    QTdChatType *m_chatType;
+    Q_DISABLE_COPY(QTdChat)
+    QPointer<QTdChatType> m_chatType;
     QString m_title;
-    QTdMessage *m_lastMessage;
-    QTdChatPhoto *m_chatPhoto;
+    QScopedPointer<QTdMessage> m_lastMessage;
+    QScopedPointer<QTdChatPhoto> m_chatPhoto;
     QTdInt64 m_order;
     bool m_isPinned;
     bool m_canBeReported;
@@ -232,7 +238,7 @@ private:
     QTdInt64 m_lastReadInboxMsg;
     QTdInt64 m_lastReadOutboxMsg;
     QTdInt32 m_unreadMentionCount;
-    QTdNotificationSettings *m_notifySettings;
+    QScopedPointer<QTdNotificationSettings> m_notifySettings;
 
     struct useraction {
         QTdInt32 userId;

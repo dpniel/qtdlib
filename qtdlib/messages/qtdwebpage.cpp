@@ -1,9 +1,9 @@
 #include "qtdwebpage.h"
 
 QTdWebPage::QTdWebPage(QObject *parent) : QTdObject(parent),
-    m_photo(Q_NULLPTR), m_embedWidth(0), m_embedheight(0),
-    m_duration(0), m_animation(Q_NULLPTR), m_audio(Q_NULLPTR),
-    m_document(Q_NULLPTR), m_sticker(Q_NULLPTR), m_hasInstantView(false)
+    m_photo(new QTdPhotos), m_embedWidth(0), m_embedheight(0),
+    m_duration(0), m_animation(new QTdAnimation), m_audio(new QTdAudio),
+    m_document(new QTdDocument), m_sticker(new QTdSticker), m_hasInstantView(false)
 {
     setType(WEB_PAGE);
 }
@@ -40,7 +40,7 @@ QString QTdWebPage::description() const
 
 QTdPhotos *QTdWebPage::photo() const
 {
-    return m_photo;
+    return m_photo.data();
 }
 
 QString QTdWebPage::embedUrl() const
@@ -75,22 +75,22 @@ QString QTdWebPage::author() const
 
 QTdAnimation *QTdWebPage::animation() const
 {
-    return m_animation;
+    return m_animation.data();
 }
 
 QTdAudio *QTdWebPage::audio() const
 {
-    return m_audio;
+    return m_audio.data();
 }
 
 QTdDocument *QTdWebPage::document() const
 {
-    return m_document;
+    return m_document.data();
 }
 
 QTdSticker *QTdWebPage::sticker() const
 {
-    return m_sticker;
+    return m_sticker.data();
 }
 
 bool QTdWebPage::hasInstantView() const
@@ -107,7 +107,6 @@ void QTdWebPage::unmarshalJson(const QJsonObject &json)
     m_title = json["title"].toString();
     m_description = json["description"].toString();
     if (json.contains("photo")) {
-        m_photo = new QTdPhotos(this);
         m_photo->unmarshalJson(json["photo"].toObject());
     }
     m_embedUrl = json["embed_url"].toString();
@@ -118,22 +117,18 @@ void QTdWebPage::unmarshalJson(const QJsonObject &json)
     m_author = json["author"].toString();
 
     if (json.contains("animation")) {
-        m_animation = new QTdAnimation(this);
         m_animation->unmarshalJson(json["animation"].toObject());
     }
 
     if (json.contains("audio")) {
-        m_audio = new QTdAudio(this);
         m_audio->unmarshalJson(json["audio"].toObject());
     }
 
     if (json.contains("document")) {
-        m_document = new QTdDocument(this);
         m_document->unmarshalJson(json["document"].toObject());
     }
 
     if (json.contains("sticker")) {
-        m_sticker = new QTdSticker(this);
         m_sticker->unmarshalJson(json["sticker"].toObject());
     }
 

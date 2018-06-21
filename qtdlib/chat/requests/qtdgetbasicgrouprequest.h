@@ -14,6 +14,7 @@ public:
 
     QJsonObject marshalJson() Q_DECL_FINAL;
 private:
+    Q_DISABLE_COPY(QTdGetBasicGroupRequest)
     qint32 m_groupId;
 };
 

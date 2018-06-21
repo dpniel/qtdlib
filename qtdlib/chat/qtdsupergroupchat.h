@@ -2,6 +2,7 @@
 #define QTDSUPERGROUPCHAT_H
 
 #include <QObject>
+#include <QPointer>
 #include "qtdchat.h"
 #include "qtdchatmemberstatus.h"
 
@@ -67,6 +68,9 @@ signals:
     void superGroupChanged();
     void superGroupInfoChanged();
 
+protected:
+    virtual void onChatOpened();
+
 private slots:
     void getSuperGroupData();
     void updateSuperGroup(const QJsonObject &json);
@@ -74,10 +78,11 @@ private slots:
     void handleSuperGroupFullInfo(const QJsonObject &json);
     void superGroupFullInfo(const QJsonObject &info);
 private:
+    Q_DISABLE_COPY(QTdSuperGroupChat)
     QTdInt32 m_sgId;
     QString m_username;
     qint32 m_date;
-    QTdChatMemberStatus *m_status;
+    QPointer<QTdChatMemberStatus> m_status;
     QTdInt32 m_memberCount;
     bool m_canInvite;
     bool m_signMessages;

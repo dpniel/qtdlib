@@ -2,6 +2,8 @@
 #define QTDUSER_H
 
 #include <QObject>
+#include <QPointer>
+#include <QScopedPointer>
 #include <QList>
 #include "common/qabstractint32id.h"
 #include "qtduserstatus.h"
@@ -71,18 +73,19 @@ public slots:
     void setStatus(QTdUserStatus* status);
 
 private:
+    Q_DISABLE_COPY(QTdUser)
     QString m_firstName;
     QString m_lastName;
     QString m_username;
     QString m_phoneNumber;
-    QTdUserStatus* m_status;
-    QTdProfilePhoto* m_profilePhoto;
-    QTdLinkState* m_outgoingLink;
-    QTdLinkState* m_incomingLink;
+    QPointer<QTdUserStatus> m_status;
+    QScopedPointer<QTdProfilePhoto> m_profilePhoto;
+    QPointer<QTdLinkState> m_outgoingLink;
+    QPointer<QTdLinkState> m_incomingLink;
     bool m_isVerified;
     QString m_restrictionReason;
     QString m_languageCode;
-    QTdUserType* m_userType;
+    QPointer<QTdUserType> m_userType;
 };
 
 #endif // QTDUSER_H

@@ -36,6 +36,7 @@ public:
     QJsonObject marshalJson() Q_DECL_FINAL;
 
 private:
+    Q_DISABLE_COPY(QTdBlockUserRequest)
     qint32 m_userId;
 };
 

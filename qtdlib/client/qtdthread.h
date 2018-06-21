@@ -26,6 +26,7 @@ public slots:
     void run();
 
 private:
+    Q_DISABLE_COPY(QTdWorker)
     QSharedPointer<Handle> m_tdlib;
 };
 

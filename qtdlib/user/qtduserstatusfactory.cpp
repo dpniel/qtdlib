@@ -4,7 +4,7 @@
 QTdUserStatus *QTdUserStatusFactory::create(const QJsonObject &json, QObject *parent)
 {
     const QString type = json["@type"].toString();
-    qDebug() << "[USERSTATUSTYPE] " << type;
+//    qDebug() << "[USERSTATUSTYPE] " << type;
     QTdUserStatus *obj = Q_NULLPTR;
     if (type == "userStatusEmpty") {
         obj = new QTdUserStatusEmpty(parent);

@@ -3,7 +3,9 @@
 
 #include <functional>
 #include <QObject>
+#include <QPointer>
 #include <QSharedPointer>
+#include <QScopedPointer>
 #include <QHash>
 #include <QFuture>
 #include <QThread>
@@ -73,37 +75,39 @@ public:
 signals:
     void authStateChanged(QTdAuthState *state);
     void connectionStateChanged(QTdConnectionState *state);
-    void updateUser(QJsonObject user);
-    void updateUserStatus(QString user_id, QJsonObject status);
-    void updateFile(QJsonObject file);
-    void updateNewChat(QJsonObject chat);
-    void updateChatOrder(QJsonObject chat);
-    void updateChatLastMessage(QJsonObject chat);
-    void updateBasicGroup(QJsonObject group);
-    void updateBasicGroupFullInfo(QJsonObject group);
-    void secretChat(QJsonObject chat);
-    void updateSecretChat(QJsonObject chat);
-    void superGroup(QJsonObject group);
-    void updateSuperGroup(QJsonObject group);
-    void supergroupFullInfo(QJsonObject group);
-    void updateSupergroupFullInfo(QJsonObject group);
-    void updateChatReadInbox(QJsonObject chat);
-    void updateChatReadOutbox(QJsonObject chat);
-    void updateChatIsPinned(QJsonObject chat);
-    void updateChatPhoto(QJsonObject photo);
-    void updateChatReplyMarkup(QJsonObject chat);
-    void updateChatTitle(QJsonObject chat);
-    void updateChatUnreadMentionCount(QJsonObject chat);
-    void updateUserChatAction(QJsonObject chat);
-    void messages(QJsonObject messages);
+    void updateUser(const QJsonObject &user);
+    void updateUserStatus(const QString &user_id, const QJsonObject &status);
+    void updateFile(const QJsonObject &file);
+    void updateNewChat(const QJsonObject &chat);
+    void updateChatOrder(const QJsonObject &chat);
+    void updateChatLastMessage(const QJsonObject &chat);
+    void updateBasicGroup(const QJsonObject &group);
+    void updateBasicGroupFullInfo(const QJsonObject &group);
+    void secretChat(const QJsonObject &chat);
+    void updateSecretChat(const QJsonObject &chat);
+    void superGroup(const QJsonObject &group);
+    void updateSuperGroup(const QJsonObject &group);
+    void supergroupFullInfo(const QJsonObject &group);
+    void updateSupergroupFullInfo(const QJsonObject &group);
+    void updateChatReadInbox(const QJsonObject &chat);
+    void updateChatReadOutbox(const QJsonObject &chat);
+    void updateChatIsPinned(const QJsonObject &chat);
+    void updateChatPhoto(const QJsonObject &photo);
+    void updateChatReplyMarkup(const QJsonObject &chat);
+    void updateChatTitle(const QJsonObject &chat);
+    void updateChatUnreadMentionCount(const QJsonObject &chat);
+    void updateUserChatAction(const QJsonObject &chat);
+    void messages(const QJsonObject &messages);
+    void updateDeleteMessages(const QJsonObject &messages);
 
 private slots:
     void handleRecv(const QJsonObject &data);
 private:
+    Q_DISABLE_COPY(QTdClient)
     void init();
-    QThread *m_worker;
-    QTdAuthState *m_authState;
-    QTdConnectionState *m_connectionState;
+    QScopedPointer<QThread> m_worker;
+    QPointer<QTdAuthState> m_authState;
+    QPointer<QTdConnectionState> m_connectionState;
     QHash<QString, ReceiveCallback> m_events;
 };
 

@@ -5,28 +5,31 @@ QTdMessageContent::QTdMessageContent(QObject *parent) : QTdObject(parent)
 }
 
 QTdMessageText::QTdMessageText(QObject *parent) : QTdMessageContent(parent),
-    m_text(Q_NULLPTR), m_webPage(Q_NULLPTR)
+    m_text(new QTdFormattedText), m_webPage(new QTdWebPage), m_hasWebPage(false)
 {
     setType(MESSAGE_TEXT);
 }
 
 QTdFormattedText *QTdMessageText::text() const
 {
-    return m_text;
+    return m_text.data();
 }
 
 QTdWebPage *QTdMessageText::webPage() const
 {
-    return m_webPage;
+    if (!m_hasWebPage) {
+        return Q_NULLPTR;
+    }
+    return m_webPage.data();
 }
 
 void QTdMessageText::unmarshalJson(const QJsonObject &json)
 {
-    m_text = new QTdFormattedText(this);
+    m_hasWebPage = false;
     m_text->unmarshalJson(json["text"].toObject());
     if (json.contains("web_page")) {
-        m_webPage = new QTdWebPage(this);
         m_webPage->unmarshalJson(json["web_page"].toObject());
+        m_hasWebPage = true;
     }
     emit dataChanged();
 }

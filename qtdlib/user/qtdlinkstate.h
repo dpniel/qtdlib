@@ -7,6 +7,7 @@
 class QTdLinkState : public QTdObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdLinkState)
 public:
     explicit QTdLinkState(QObject *parent = nullptr);
 };
@@ -14,6 +15,7 @@ public:
 class QTdLinkStateIsContact : public QTdLinkState
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdLinkStateIsContact)
 public:
     explicit QTdLinkStateIsContact(QObject *parent = Q_NULLPTR);
 };
@@ -21,6 +23,7 @@ public:
 class QTdLinkStateKnowsPhoneNumber : public QTdLinkState
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdLinkStateKnowsPhoneNumber)
 public:
     explicit QTdLinkStateKnowsPhoneNumber(QObject *parent = Q_NULLPTR);
 };
@@ -28,6 +31,7 @@ public:
 class QTdLinkStateNone : public QTdLinkState
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdLinkStateNone)
 public:
     explicit QTdLinkStateNone(QObject *parent = Q_NULLPTR);
 };

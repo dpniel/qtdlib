@@ -121,7 +121,7 @@ void QTdChatListModel::updateChatReadInbox(const QJsonObject &json)
     const qint64 id = qint64(json["chat_id"].toDouble());
     QTdChat *tdchat = m_model->getByUid(QString::number(id));
     if (tdchat) {
-        qDebug() << "Updating chat read inbox";
+//        qDebug() << "Updating chat read inbox";
         tdchat->updateChatReadInbox(json);
         emit contentsChanged();
     }
@@ -132,7 +132,7 @@ void QTdChatListModel::updateChatReadOutbox(const QJsonObject &json)
     const qint64 id = qint64(json["chat_id"].toDouble());
     QTdChat *tdchat = m_model->getByUid(QString::number(id));
     if (tdchat) {
-        qDebug() << "Updating chat read outbox";
+//        qDebug() << "Updating chat read outbox";
         tdchat->updateChatReadOutbox(json);
         emit contentsChanged();
     }
@@ -143,7 +143,7 @@ void QTdChatListModel::handleUpdateChatIsPinned(const QJsonObject &json)
     const qint64 id = qint64(json["chat_id"].toDouble());
     QTdChat *tdchat = m_model->getByUid(QString::number(id));
     if (tdchat) {
-        qDebug() << "Updating chat isPinned";
+//        qDebug() << "Updating chat isPinned";
         tdchat->updateChatIsPinned(json);
         emit contentsChanged();
         // Update our internal PinnedChats list
@@ -160,7 +160,7 @@ void QTdChatListModel::handleUpdateChatPhoto(const QJsonObject &chat)
     const qint64 id = qint64(chat["chat_id"].toDouble());
     QTdChat *tdchat = m_model->getByUid(QString::number(id));
     if (tdchat) {
-        qDebug() << "Updating chat photo";
+//        qDebug() << "Updating chat photo";
         tdchat->updateChatPhoto(chat["photo"].toObject());
         emit contentsChanged();
     }
@@ -171,7 +171,7 @@ void QTdChatListModel::handleUpdateChatReplyMarkup(const QJsonObject &chat)
     const qint64 id = qint64(chat["chat_id"].toDouble());
     QTdChat *tdchat = m_model->getByUid(QString::number(id));
     if (tdchat) {
-        qDebug() << "Updating chat reply markup";
+//        qDebug() << "Updating chat reply markup";
         tdchat->updateChatReplyMarkup(chat);
         emit contentsChanged();
     }
@@ -182,7 +182,7 @@ void QTdChatListModel::handleUpdateChatTitle(const QJsonObject &chat)
     const qint64 id = qint64(chat["chat_id"].toDouble());
     QTdChat *tdchat = m_model->getByUid(QString::number(id));
     if (tdchat) {
-        qDebug() << "Updating chat title";
+//        qDebug() << "Updating chat title";
         tdchat->updateChatTitle(chat);
         emit contentsChanged();
     }
@@ -193,7 +193,7 @@ void QTdChatListModel::handleUpdateChatUnreadMentionCount(const QJsonObject &cha
     const qint64 id = qint64(chat["chat_id"].toDouble());
     QTdChat *tdchat = m_model->getByUid(QString::number(id));
     if (tdchat) {
-        qDebug() << "Updating chat unread mention count";
+//        qDebug() << "Updating chat unread mention count";
         tdchat->updateChatUnreadMentionCount(chat);
         emit contentsChanged();
     }

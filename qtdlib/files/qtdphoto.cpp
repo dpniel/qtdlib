@@ -2,34 +2,25 @@
 #include "qtdlocalfile.h"
 #include "qtdremotefile.h"
 
-QTdPhoto::QTdPhoto(QObject *parent) : QAbstractInt64Id(parent),
-    m_small(0), m_big(0)
+QTdPhoto::QTdPhoto(QObject *parent) : QTdObject(parent),
+    m_small(new QTdFile), m_big(new QTdFile)
 {
 }
 
 QTdFile *QTdPhoto::small() const
 {
-    return m_small;
+    return m_small.data();
 }
 
 QTdFile *QTdPhoto::big() const
 {
-    return m_big;
+    return m_big.data();
 }
 
 void QTdPhoto::unmarshalJson(const QJsonObject &json)
 {
-    if (m_small) {
-        m_small->deleteLater();
-    }
-    m_small = new QTdFile(this);
     m_small->unmarshalJson(json["small"].toObject());
-    emit smallChanged(m_small);
-    if (m_big) {
-        m_big->deleteLater();
-    }
-    m_big = new QTdFile(this);
+    emit smallChanged(m_small.data());
     m_big->unmarshalJson(json["big"].toObject());
-    emit bigChanged(m_big);
-    QAbstractInt64Id::unmarshalJson(json);
+    emit bigChanged(m_big.data());
 }

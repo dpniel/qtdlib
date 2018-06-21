@@ -12,6 +12,7 @@
 class QTdUserStatus : public QTdObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdUserStatus)
 public:
     explicit QTdUserStatus(QObject *parent = Q_NULLPTR);
 };
@@ -24,6 +25,7 @@ public:
 class QTdUserStatusEmpty : public QTdUserStatus
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdUserStatusEmpty)
 public:
     explicit QTdUserStatusEmpty(QObject *parent = Q_NULLPTR);
 };
@@ -36,6 +38,7 @@ public:
 class QTdUserStateLastMonth : public QTdUserStatus
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdUserStateLastMonth)
 public:
     explicit QTdUserStateLastMonth(QObject *parent = Q_NULLPTR);
 };
@@ -48,6 +51,7 @@ public:
 class QTdUserStatusLastWeek : public QTdUserStatus
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdUserStatusLastWeek)
 public:
     explicit QTdUserStatusLastWeek(QObject *parent = Q_NULLPTR);
 };
@@ -60,6 +64,7 @@ public:
 class QTdUserStatusOffline : public QTdUserStatus
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdUserStatusOffline)
     Q_PROPERTY(QDateTime wasOnline READ wasOnline NOTIFY wasOnlineChanged)
 public:
     explicit QTdUserStatusOffline(QObject *parent = Q_NULLPTR);
@@ -79,6 +84,7 @@ private:
 class QTdUserStatusOnline : public QTdUserStatus
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdUserStatusOnline)
     Q_PROPERTY(QDateTime expires READ expires NOTIFY expiresChanged)
 public:
     explicit QTdUserStatusOnline(QObject *parent = Q_NULLPTR);
@@ -98,6 +104,7 @@ private:
 class QTdUserStatusRecently : public QTdUserStatus
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdUserStatusRecently)
 public:
     explicit QTdUserStatusRecently(QObject *parent = Q_NULLPTR);
 };

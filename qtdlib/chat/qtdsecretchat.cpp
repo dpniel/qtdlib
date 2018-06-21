@@ -6,7 +6,6 @@ QTdSecretChat::QTdSecretChat(QObject *parent) : QTdChat(parent),
     m_secretChatId(0), m_userId(0), m_isOutbound(false),
     m_ttl(0), m_layer(0), m_state(Q_NULLPTR)
 {
-    connect(this, &QTdChat::chatTypeChanged, this, &QTdSecretChat::getSecretChatData);
     connect(QTdClient::instance(), &QTdClient::secretChat, this, &QTdSecretChat::updateSecretChat);
     connect(QTdClient::instance(), &QTdClient::updateSecretChat, this, &QTdSecretChat::updateSecretChat);
 }
@@ -56,6 +55,11 @@ QTdSecretChatState *QTdSecretChat::state() const
     return m_state;
 }
 
+void QTdSecretChat::onChatOpened()
+{
+    getSecretChatData();
+}
+
 void QTdSecretChat::getSecretChatData()
 {
     QTdChatTypeSecret *secret = qobject_cast<QTdChatTypeSecret*>(chatType());
@@ -76,6 +80,9 @@ void QTdSecretChat::updateSecretChat(const QJsonObject &data)
 
     m_secretChatId = sid;
     m_userId = data["user_id"];
+    if (m_state) {
+        m_state->deleteLater();
+    }
     const QJsonObject state = data["state"].toObject();
     const QString type = state["@type"].toString();
     if (type == "secretChatStateClosed") {

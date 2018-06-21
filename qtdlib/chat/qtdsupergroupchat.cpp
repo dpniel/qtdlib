@@ -12,7 +12,6 @@ QTdSuperGroupChat::QTdSuperGroupChat(QObject *parent) : QTdChat(parent),
     m_canSetUsername(false), m_canSetStickerSet(false), m_historyAvailable(false), m_stickerSet(0),
     m_pinnedMessageId(0), m_upgradeGroupId(0), m_upgradeMaxMsgId(0)
 {
-    connect(this, &QTdChat::chatTypeChanged, this, &QTdSuperGroupChat::getSuperGroupData);
     connect(QTdClient::instance(), &QTdClient::superGroup, this, &QTdSuperGroupChat::updateSuperGroup);
     connect(QTdClient::instance(), &QTdClient::updateSuperGroup, this, &QTdSuperGroupChat::updateSuperGroup);
     connect(QTdClient::instance(), &QTdClient::updateSupergroupFullInfo, this, &QTdSuperGroupChat::updateSuperGroupFullInfo);
@@ -169,6 +168,11 @@ qint64 QTdSuperGroupChat::upgradedFromMaxMessageId() const
     return m_upgradeMaxMsgId.value();
 }
 
+void QTdSuperGroupChat::onChatOpened()
+{
+    getSuperGroupData();
+}
+
 void QTdSuperGroupChat::getSuperGroupData()
 {
     QTdChatTypeSuperGroup *group = qobject_cast<QTdChatTypeSuperGroup*>(chatType());
@@ -189,8 +193,7 @@ void QTdSuperGroupChat::updateSuperGroup(const QJsonObject &json)
     m_sgId = gid;
 
     if (m_status) {
-        delete m_status;
-        m_status = 0;
+        m_status->deleteLater();
     }
     const QJsonObject status = json["status"].toObject();
     const QString type = status["@type"].toString();

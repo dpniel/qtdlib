@@ -4,7 +4,7 @@
 
 QTdUser::QTdUser(QObject *parent) : QAbstractInt32Id(parent),
   m_status(Q_NULLPTR),
-  m_profilePhoto(Q_NULLPTR),
+  m_profilePhoto(new QTdProfilePhoto),
   m_outgoingLink(Q_NULLPTR),
   m_incomingLink(Q_NULLPTR),
   m_isVerified(false),
@@ -46,12 +46,8 @@ void QTdUser::unmarshalJson(const QJsonObject &json)
         m_userType->unmarshalJson(typeObj);
     }
 
-    if (m_profilePhoto) {
-        m_profilePhoto->deleteLater();
-    }
-    m_profilePhoto = new QTdProfilePhoto(this);
     m_profilePhoto->unmarshalJson(json["profile_photo"].toObject());
-    emit profilePhotoChanged(m_profilePhoto);
+    emit profilePhotoChanged(m_profilePhoto.data());
     const bool hasProfilePhoto = m_profilePhoto->small()->id() > 0;
     const bool needsDownload = m_profilePhoto->small()->local()->path().isEmpty();
     if (hasProfilePhoto && needsDownload) {
@@ -105,7 +101,7 @@ QTdLinkState *QTdUser::incomingLink() const
 
 QTdProfilePhoto *QTdUser::profilePhoto() const
 {
-    return m_profilePhoto;
+    return m_profilePhoto.data();
 }
 
 QTdUserStatus *QTdUser::status() const

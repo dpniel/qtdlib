@@ -2,6 +2,7 @@
 #define QTDMESSAGE_H
 
 #include <QObject>
+#include <QPointer>
 #include <QDateTime>
 #include "common/qabstractint64id.h"
 #include "user/qtduser.h"
@@ -65,6 +66,8 @@ public:
 
     Q_INVOKABLE QString formatDate(const QDateTime &dt);
 
+    bool isValid() const;
+
 signals:
     void messageChanged();
     void senderChanged();
@@ -78,9 +81,9 @@ private:
     qint32 m_date;
     QTdInt32 m_sender_user_id;
     QTdInt64 m_chatId;
-    QTdUser *m_sender;
+    QPointer<QTdUser> m_sender;
     bool m_waitingForSender;
-    QTdMessageSendingState *m_sendingState;
+    QPointer<QTdMessageSendingState> m_sendingState;
     bool m_isOutgoing;
     bool m_canBeEdited;
     bool m_canBeForwarded;
@@ -88,7 +91,8 @@ private:
     bool m_canBeDeletedForAllUsers;
     bool m_isChannelPost;
     bool m_containsUnreadMention;
-    QTdMessageContent *m_content;
+    QPointer<QTdMessageContent> m_content;
+    bool m_isValid;
 };
 
 #endif // QTDMESSAGE_H

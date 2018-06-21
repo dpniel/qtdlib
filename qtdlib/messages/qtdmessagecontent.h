@@ -2,6 +2,7 @@
 #define QTDMESSAGECONTENT_H
 
 #include <QObject>
+#include <QScopedPointer>
 #include "common/qabstracttdobject.h"
 #include "qtdformattedtext.h"
 #include "qtdwebpage.h"
@@ -9,6 +10,7 @@
 class QTdMessageContent : public QTdObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdMessageContent)
 public:
     explicit QTdMessageContent(QObject *parent = nullptr);
 };
@@ -29,8 +31,10 @@ public:
 signals:
     void dataChanged();
 private:
-    QTdFormattedText* m_text;
-    QTdWebPage* m_webPage;
+    Q_DISABLE_COPY(QTdMessageText)
+    QScopedPointer<QTdFormattedText> m_text;
+    QScopedPointer<QTdWebPage> m_webPage;
+    bool m_hasWebPage;
 };
 
 #endif // QTDMESSAGECONTENT_H

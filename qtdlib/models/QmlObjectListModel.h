@@ -11,6 +11,7 @@
 #include <QMetaObject>
 #include <QMetaProperty>
 #include <QObject>
+#include <QQmlEngine>
 #include <QString>
 #include <QStringBuilder>
 #include <QVariant>
@@ -86,6 +87,7 @@ public:
         , m_dispRoleName (displayRole)
         , m_metaObj (ItemType::staticMetaObject)
     {
+        QQmlEngine::setObjectOwnership(this, QQmlEngine::CppOwnership);
         static QSet<QByteArray> roleNamesBlacklist;
         if (roleNamesBlacklist.isEmpty ()) {
             roleNamesBlacklist << QByteArrayLiteral ("index")
@@ -356,6 +358,7 @@ protected: // internal stuff
     }
     void referenceItem (ItemType * item) {
         if (item != Q_NULLPTR) {
+            QQmlEngine::setObjectOwnership(item, QQmlEngine::CppOwnership);
             if (!item->parent ()) {
                 item->setParent (this);
             }

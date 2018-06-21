@@ -2,6 +2,7 @@
 #define QTDFORMATTEDTEXT_H
 
 #include <QObject>
+#include <QPointer>
 #include "common/qabstracttdobject.h"
 #include "models/QmlObjectListModel.h"
 #include "qtdtextentity.h"
@@ -27,7 +28,7 @@ signals:
 
 private:
     QString m_text;
-    QQmlObjectListModel<QTdTextEntity> *m_entities;
+    QPointer<QQmlObjectListModel<QTdTextEntity>> m_entities;
 };
 
 #endif // QTDFORMATTEDTEXT_H

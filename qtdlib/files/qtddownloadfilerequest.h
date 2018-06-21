@@ -23,6 +23,7 @@ public:
     QJsonObject marshalJson();
 
 private:
+    Q_DISABLE_COPY(QTdDownloadFileRequest)
     Priority m_priority;
     qint32 m_fileId;
 

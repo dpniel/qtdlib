@@ -2,6 +2,7 @@
 #define QTDMESSAGELISTMODEL_H
 
 #include <QObject>
+#include <QPointer>
 #include "chat/qtdchat.h"
 #include "models/QmlObjectListModel.h"
 #include "qtdmessage.h"
@@ -32,8 +33,9 @@ private slots:
     void loadMessages(const QJsonValue &fromMsgId);
 
 private:
-    QQmlObjectListModel<QTdMessage> *m_model;
-    QTdChat *m_chat;
+    Q_DISABLE_COPY(QTdMessageListModel)
+    QPointer<QQmlObjectListModel<QTdMessage>> m_model;
+    QPointer<QTdChat> m_chat;
 };
 
 #endif // QTDMESSAGELISTMODEL_H

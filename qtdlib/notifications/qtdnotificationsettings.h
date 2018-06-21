@@ -24,6 +24,7 @@ signals:
     void showPreviewChanged(bool showPreview);
 
 private:
+    Q_DISABLE_COPY(QTdNotificationSettings)
     qint32 m_muteFor;
     bool m_showPreview;
 };

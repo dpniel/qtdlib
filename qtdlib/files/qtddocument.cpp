@@ -1,7 +1,7 @@
 #include "qtddocument.h"
 
 QTdDocument::QTdDocument(QObject *parent) : QTdObject(parent),
-    m_thumbnail(Q_NULLPTR), m_document(Q_NULLPTR)
+    m_thumbnail(new QTdPhotoSize), m_document(new QTdFile)
 {
     setType(DOCUMENT);
 }
@@ -18,12 +18,12 @@ QString QTdDocument::mimeType() const
 
 QTdPhotoSize *QTdDocument::thumbnail() const
 {
-    return m_thumbnail;
+    return m_thumbnail.data();
 }
 
 QTdFile *QTdDocument::document() const
 {
-    return m_document;
+    return m_document.data();
 }
 
 void QTdDocument::unmarshalJson(const QJsonObject &json)
@@ -31,10 +31,8 @@ void QTdDocument::unmarshalJson(const QJsonObject &json)
     m_fileName = json["file_name"].toString();
     m_mimeType = json["mime_type"].toString();
     if (json.contains("thumbnail")) {
-        m_thumbnail = new QTdPhotoSize(this);
         m_thumbnail->unmarshalJson(json["thumbnail"].toObject());
     }
-    m_document = new QTdFile(this);
     m_document->unmarshalJson(json["document"].toObject());
     emit documentChanged();
 }

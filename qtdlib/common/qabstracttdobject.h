@@ -15,6 +15,7 @@
 class QTdObject : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdObject)
     Q_PROPERTY(Type type READ type NOTIFY typeChanged)
 public:
     explicit QTdObject(QObject *parent = nullptr);

@@ -13,6 +13,7 @@
 class QTdChatMemberStatus : public QTdObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatMemberStatus)
 public:
     explicit QTdChatMemberStatus(QObject *parent = nullptr);
 };
@@ -60,6 +61,7 @@ public:
 signals:
     void statusChanged();
 private:
+    Q_DISABLE_COPY(QTdChatMemberStatusAdmin)
     bool m_canBeEdited;
     bool m_canChangeInfo;
     bool m_canPostMessages;
@@ -89,6 +91,7 @@ public:
 signals:
     void statusChanged();
 private:
+    Q_DISABLE_COPY(QTdChatMemberStatusBanned)
     qint32 m_bannedTil;
 };
 
@@ -108,6 +111,7 @@ public:
 signals:
     void statusChanged();
 private:
+    Q_DISABLE_COPY(QTdChatMemberStatusCreator)
     bool m_isMember;
 };
 
@@ -119,6 +123,7 @@ private:
 class QTdChatMemberStatusLeft : public QTdChatMemberStatus
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatMemberStatusLeft)
 public:
     explicit QTdChatMemberStatusLeft(QObject *parent = Q_NULLPTR);
 };
@@ -131,6 +136,7 @@ public:
 class QTdChatMemberStatusMember : public QTdChatMemberStatus
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatMemberStatusMember)
 public:
     explicit QTdChatMemberStatusMember(QObject *parent = Q_NULLPTR);
 };
@@ -164,6 +170,7 @@ signals:
     void statusChanged();
 
 private:
+    Q_DISABLE_COPY(QTdChatMemberStatusRestricted)
     bool m_isMember;
     qint32 m_restrictedUntil;
     bool m_canSendMessages;

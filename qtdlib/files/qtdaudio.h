@@ -2,6 +2,7 @@
 #define QTDAUDIO_H
 
 #include <QObject>
+#include <QScopedPointer>
 #include "common/qabstracttdobject.h"
 #include "qtdphotosize.h"
 
@@ -44,8 +45,8 @@ private:
     QString m_performer;
     QString m_fileName;
     QString m_mimeType;
-    QTdPhotoSize* m_albumCoverThumbnail;
-    QTdFile* m_audio;
+    QScopedPointer<QTdPhotoSize> m_albumCoverThumbnail;
+    QScopedPointer<QTdFile> m_audio;
 };
 
 #endif // QTDAUDIO_H

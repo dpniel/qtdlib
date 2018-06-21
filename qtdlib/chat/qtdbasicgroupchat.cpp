@@ -10,7 +10,6 @@ QTdBasicGroupChat::QTdBasicGroupChat(QObject *parent) : QTdChat(parent),
     m_creatorId(0), m_members(Q_NULLPTR)
 {
     m_members = new QQmlObjectListModel<QTdChatMember>(this, "", "userId");
-    connect(this, &QTdChat::chatTypeChanged, this, &QTdBasicGroupChat::requestGroupData);
     connect(QTdClient::instance(), &QTdClient::updateBasicGroup, this, &QTdBasicGroupChat::updateGroupData);
     connect(QTdClient::instance(), &QTdClient::updateBasicGroupFullInfo, this, &QTdBasicGroupChat::updateGroupInfo);
 }
@@ -85,6 +84,11 @@ QString QTdBasicGroupChat::inviteLink() const
     return m_inviteLink;
 }
 
+void QTdBasicGroupChat::onChatOpened()
+{
+    requestGroupData();
+}
+
 void QTdBasicGroupChat::requestGroupData()
 {
     QTdChatTypeBasicGroup *group = qobject_cast<QTdChatTypeBasicGroup*>(chatType());
@@ -106,8 +110,7 @@ void QTdBasicGroupChat::updateGroupData(const QJsonObject &json)
     m_memberCount = json["member_count"];
 
     if (m_status) {
-        delete m_status;
-        m_status = 0;
+        m_status->deleteLater();
     }
     const QJsonObject status = json["status"].toObject();
     const QString type = status["@type"].toString();

@@ -2,6 +2,7 @@
 #define QTDTEXTENTITY_H
 
 #include <QObject>
+#include <QPointer>
 #include "common/qabstracttdobject.h"
 #include "qtdtextentitytype.h"
 
@@ -26,9 +27,10 @@ signals:
     void entityChanged();
 
 private:
+    Q_DISABLE_COPY(QTdTextEntity)
     qint32 m_offset;
     qint32 m_length;
-    QTdTextEntityType* m_type;
+    QPointer<QTdTextEntityType> m_type;
 };
 
 #endif // QTDTEXTENTITY_H

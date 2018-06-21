@@ -26,15 +26,14 @@ void sendTd(const QJsonObject &json) {
 }
 
 QTdClient::QTdClient(QObject *parent) : QObject(parent),
-    m_worker(Q_NULLPTR),
+    m_worker(new QThread),
     m_authState(Q_NULLPTR),
     m_connectionState(Q_NULLPTR)
 {
     init();
-    m_worker = new QThread(this);
     QTdWorker *w = new QTdWorker;
-    w->moveToThread(m_worker);
-    connect(m_worker, &QThread::started, w, &QTdWorker::run);
+    w->moveToThread(m_worker.data());
+    connect(m_worker.data(), &QThread::started, w, &QTdWorker::run);
     connect(w, &QTdWorker::recv, this, &QTdClient::handleRecv);
     m_worker->start();
 }
@@ -93,21 +92,28 @@ QFuture<QJsonObject> QTdClient::exec(const QJsonObject &json)
 
 void QTdClient::handleRecv(const QJsonObject &data)
 {
+    static bool DEBUG_TDLIB = false;
+    if (!DEBUG_TDLIB) {
+        DEBUG_TDLIB = qgetenv("TDLIB_DEBUG") == QByteArrayLiteral("1");
+    }
     const QString type = data["@type"].toString();
 
-    qDebug() << "-------------[ RCV ]-----------------------";
-    qDebug() << "TYPE >> " << type;
-    qDebug() << "DATA >> " << data;
-    qDebug() << "-------------------------------------------";
+    if (DEBUG_TDLIB) {
+        qDebug() << "-------------[ RCV ]-----------------------";
+        qDebug() << "TYPE >> " << type;
+        qDebug() << "DATA >> " << data;
+        qDebug() << "-------------------------------------------";
+    }
 
     if (m_events.contains(type)) {
         m_events.value(type)(data);
         return;
     }
-
-    qDebug() << "---------[UNHANDLED]-------------";
-    qDebug() << type;
-    qDebug() << "---------------------------------";
+    if (DEBUG_TDLIB) {
+        qDebug() << "---------[UNHANDLED]-------------";
+        qDebug() << type;
+        qDebug() << "---------------------------------";
+    }
 }
 
 void QTdClient::init()

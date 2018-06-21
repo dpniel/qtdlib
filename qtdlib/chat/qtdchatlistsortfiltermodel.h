@@ -50,6 +50,7 @@ protected:
     bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const;
 
 private:
+    Q_DISABLE_COPY(QTdChatListSortFilterModel)
     QPointer<QTdChatListModel> m_chatList;
     int m_chatFilters;
 };

@@ -7,6 +7,7 @@
 class QTdSetChatTitleRequest : public QTdRequest
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdSetChatTitleRequest)
     QString m_title;
     qint64 m_chatId;
 public:

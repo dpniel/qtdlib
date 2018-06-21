@@ -56,6 +56,9 @@ void QTdChatMember::unmarshalJson(const QJsonObject &json)
     m_inviteUserId = json["inviter_user_id"];
     m_joinedChatDate = json["joined_chat_date"];
 
+    if (m_status) {
+        m_status->deleteLater();
+    }
     const QJsonObject status = json["status"].toObject();
     const QString type = status["@type"].toString();
     if (type == "chatMemberStatusAdministrator") {

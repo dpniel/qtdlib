@@ -60,10 +60,13 @@ void QTdMessageListModel::loadMore()
 
 void QTdMessageListModel::cleanUp()
 {
+    qDebug() << "Cleaning up msglistmodel";
     if (m_model->isEmpty()) {
+        qDebug() << "Already empty";
         return;
     }
     m_model->clear();
+    qDebug() << "Messagelistmodel now at count: " << m_model->count();
 }
 
 void QTdMessageListModel::handleMessages(const QJsonObject &json)

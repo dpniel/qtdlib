@@ -9,6 +9,7 @@
 class QTdProfilePhoto : public QTdPhoto
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdProfilePhoto)
 public:
     explicit QTdProfilePhoto(QObject *parent = nullptr);
 };

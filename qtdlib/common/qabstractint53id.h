@@ -28,6 +28,7 @@ signals:
     void idChanged(int id);
 
 private:
+    Q_DISABLE_COPY(QAbstractInt53Id)
     QTdInt53 m_id;
 };
 

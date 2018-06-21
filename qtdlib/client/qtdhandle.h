@@ -30,9 +30,8 @@ public:
  *
  * QTdHandle::instance()->handle()
  */
-class QTdHandle
+struct QTdHandle
 {
-public:
     static QSharedPointer<Handle> instance();
 };
 

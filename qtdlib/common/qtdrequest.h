@@ -7,6 +7,7 @@
 class QTdRequest : public QTdObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdRequest)
 public:
     explicit QTdRequest(QObject *parent = nullptr);
 };

@@ -4,7 +4,7 @@
 #include "files/qtddownloadfilerequest.h"
 
 QTdFile::QTdFile(QObject *parent) : QAbstractInt32Id(parent),
-    m_size(0), m_expectedSize(0), m_local(0), m_remote(0)
+    m_size(0), m_expectedSize(0), m_local(new QTdLocalFile), m_remote(new QTdRemoteFile)
 {
     setType(FILE);
     connect(QTdClient::instance(), &QTdClient::updateFile, this, &QTdFile::handleUpdateFile);
@@ -32,23 +32,17 @@ QString QTdFile::qmlExpectedSize() const
 
 QTdLocalFile *QTdFile::local() const
 {
-    return m_local;
+    return m_local.data();
 }
 
 QTdRemoteFile *QTdFile::remote() const
 {
-    return m_remote;
+    return m_remote.data();
 }
 
 void QTdFile::unmarshalJson(const QJsonObject &json)
 {
-    if (!m_local) {
-        m_local = new QTdLocalFile(this);
-    }
     m_local->unmarshalJson(json["local"].toObject());
-    if (!m_remote) {
-        m_remote = new QTdRemoteFile(this);
-    }
     m_remote->unmarshalJson(json["remote"].toObject());
     m_size = json["size"];
     m_expectedSize = json["expected_size"];

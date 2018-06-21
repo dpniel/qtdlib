@@ -7,6 +7,7 @@
 class QTdChatAction : public QTdObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatAction)
 public:
     explicit QTdChatAction(QObject *parent = nullptr);
 };
@@ -14,6 +15,7 @@ public:
 class QTdChatActionCancel : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionCancel)
 public:
     explicit QTdChatActionCancel(QObject *parent = nullptr);
 };
@@ -22,6 +24,7 @@ public:
 class QTdChatActionChoosingContact : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionChoosingContact)
 public:
     explicit QTdChatActionChoosingContact(QObject *parent = nullptr);
 };
@@ -29,6 +32,7 @@ public:
 class QTdChatActionChoosingLocation : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionChoosingLocation)
 public:
     explicit QTdChatActionChoosingLocation(QObject *parent = nullptr);
 };
@@ -36,6 +40,7 @@ public:
 class QTdChatActionRecordingVideo : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionRecordingVideo)
 public:
     explicit QTdChatActionRecordingVideo(QObject *parent = nullptr);
 };
@@ -43,6 +48,7 @@ public:
 class QTdChatActionRecordingVideoNote : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionRecordingVideoNote)
 public:
     explicit QTdChatActionRecordingVideoNote(QObject *parent = nullptr);
 };
@@ -50,6 +56,7 @@ public:
 class QTdChatActionRecordingVoiceNote : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionRecordingVoiceNote)
 public:
     explicit QTdChatActionRecordingVoiceNote(QObject *parent = nullptr);
 };
@@ -57,6 +64,7 @@ public:
 class QTdChatActionStartPlayingGame : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionStartPlayingGame)
 public:
     explicit QTdChatActionStartPlayingGame(QObject *parent = nullptr);
 };
@@ -64,6 +72,7 @@ public:
 class QTdChatActionTyping : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionTyping)
 public:
     explicit QTdChatActionTyping(QObject *parent = nullptr);
 };
@@ -71,6 +80,7 @@ public:
 class QTdChatActionUploadingDocument : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionUploadingDocument)
 public:
     explicit QTdChatActionUploadingDocument(QObject *parent = nullptr);
 };
@@ -78,6 +88,7 @@ public:
 class QTdChatActionUploadingPhoto : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionUploadingPhoto)
 public:
     explicit QTdChatActionUploadingPhoto(QObject *parent = nullptr);
 };
@@ -85,6 +96,7 @@ public:
 class QTdChatActionUploadingVideo : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionUploadingVideo)
 public:
     explicit QTdChatActionUploadingVideo(QObject *parent = nullptr);
 };
@@ -92,6 +104,7 @@ public:
 class QTdChatActionUploadingVideoNote : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionUploadingVideoNote)
 public:
     explicit QTdChatActionUploadingVideoNote(QObject *parent = nullptr);
 };
@@ -99,6 +112,7 @@ public:
 class QTdChatActionUploadingVoiceNote : public QTdChatAction
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatActionUploadingVoiceNote)
 public:
     explicit QTdChatActionUploadingVoiceNote(QObject *parent = nullptr);
 };

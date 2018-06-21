@@ -4,9 +4,8 @@
 #include "qtdconnectionstate.h"
 #include <QJsonObject>
 
-class QTdConnectionStateFactory
+struct QTdConnectionStateFactory
 {
-public:
     static QTdConnectionState *create(const QJsonObject &json, QObject *parent);
 };
 

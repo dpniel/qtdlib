@@ -2,7 +2,7 @@
 #include <QDebug>
 
 QTdPhotoSize::QTdPhotoSize(QObject *parent) : QTdObject(parent),
-    m_photo(Q_NULLPTR), m_width(0), m_height(0)
+    m_photo(new QTdFile), m_width(0), m_height(0)
 {
     setType(PHOTO_SIZE);
 }
@@ -14,7 +14,7 @@ QString QTdPhotoSize::type() const
 
 QTdFile *QTdPhotoSize::photo() const
 {
-    return m_photo;
+    return m_photo.data();
 }
 
 qint32 QTdPhotoSize::width() const
@@ -30,7 +30,6 @@ qint32 QTdPhotoSize::height() const
 void QTdPhotoSize::unmarshalJson(const QJsonObject &json)
 {
     m_type = json["type"].toString();
-    m_photo = new QTdFile(this);
     m_photo->unmarshalJson(json["photo"].toObject());
     if (m_photo->local()->path().isEmpty()) {
         m_photo->downloadFile();

@@ -13,6 +13,7 @@
 class QTdChatType : public QTdObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdChatType)
 public:
     explicit QTdChatType(QObject *parent = nullptr);
 };
@@ -36,6 +37,7 @@ public:
 signals:
     void groupIdChanged();
 private:
+    Q_DISABLE_COPY(QTdChatTypeBasicGroup)
     QTdInt32 m_groupId;
 };
 
@@ -58,6 +60,7 @@ public:
 signals:
     void userIdChanged();
 private:
+    Q_DISABLE_COPY(QTdChatTypePrivate)
     QTdInt32 m_userId;
 };
 
@@ -81,6 +84,7 @@ public:
 signals:
     void secretChatIdChanged();
 private:
+    Q_DISABLE_COPY(QTdChatTypeSecret)
     QTdInt32 m_chatId;
 };
 
@@ -108,6 +112,7 @@ signals:
     void isChannelChanged();
 
 private:
+    Q_DISABLE_COPY(QTdChatTypeSuperGroup)
     QTdInt32 m_groupId;
     bool m_isChannel;
 };

@@ -2,6 +2,7 @@
 #define QTDPHOTOSIZE_H
 
 #include <QObject>
+#include <QScopedPointer>
 #include "common/qabstracttdobject.h"
 #include "qtdfile.h"
 
@@ -30,7 +31,7 @@ signals:
 
 private:
     QString m_type;
-    QTdFile* m_photo;
+    QScopedPointer<QTdFile> m_photo;
     qint32 m_width;
     qint32 m_height;
 };

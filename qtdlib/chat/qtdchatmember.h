@@ -2,6 +2,7 @@
 #define QTDCHATMEMBER_H
 
 #include <QObject>
+#include <QPointer>
 #include <QDateTime>
 #include "user/qtduser.h"
 #include "qtdchatmemberstatus.h"
@@ -45,10 +46,11 @@ private slots:
     void isUserAvailable(const qint32 &userId);
 
 private:
+    Q_DISABLE_COPY(QTdChatMember)
     QTdInt32 m_userId;
     QTdInt32 m_inviteUserId;
     QTdInt32 m_joinedChatDate;
-    QTdChatMemberStatus *m_status;
+    QPointer<QTdChatMemberStatus> m_status;
     bool m_waitingForUser;
 };
 

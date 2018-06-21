@@ -9,10 +9,10 @@
 #include "user/qtdusers.h"
 
 QTdChat::QTdChat(QObject *parent) : QAbstractInt64Id(parent),
-    m_chatType(0), m_chatPhoto(0), m_lastMessage(0),
+    m_chatType(0), m_chatPhoto(new QTdChatPhoto), m_lastMessage(new QTdMessage),
     m_order(0), m_isPinned(false), m_canBeReported(false),
     m_unreadCount(0), m_lastReadInboxMsg(0), m_lastReadOutboxMsg(0),
-    m_unreadMentionCount(0), m_notifySettings(Q_NULLPTR),
+    m_unreadMentionCount(0), m_notifySettings(new QTdNotificationSettings),
     m_messages(0)
 {
     setType(CHAT);
@@ -26,8 +26,7 @@ void QTdChat::unmarshalJson(const QJsonObject &json)
     updateChatTitle(json);
 
     if (m_chatType) {
-        delete m_chatType;
-        m_chatType = 0;
+        m_chatType->deleteLater();
     }
     m_chatType = QTdChatFactory::createType(json["type"].toObject(), this);
     emit chatTypeChanged(m_chatType);
@@ -47,11 +46,6 @@ void QTdChat::unmarshalJson(const QJsonObject &json)
 
     updateChatUnreadMentionCount(json);
 
-    if (m_notifySettings) {
-        delete m_notifySettings;
-        m_notifySettings = 0;
-    }
-    m_notifySettings = new QTdNotificationSettings(this);
     m_notifySettings->unmarshalJson(json["notification_settings"].toObject());
     emit notificationSettingsChanged();
 
@@ -65,12 +59,12 @@ QString QTdChat::title() const
 
 QTdMessage *QTdChat::lastMessage() const
 {
-    return m_lastMessage;
+    return m_lastMessage.data();
 }
 
 QTdChatPhoto *QTdChat::chatPhoto() const
 {
-    return m_chatPhoto;
+    return m_chatPhoto.data();
 }
 
 QString QTdChat::qmlOrder() const
@@ -145,7 +139,7 @@ qint32 QTdChat::unreadMentionCount() const
 
 QTdNotificationSettings *QTdChat::notificationSettings() const
 {
-    return m_notifySettings;
+    return m_notifySettings.data();
 }
 
 QString QTdChat::summary() const
@@ -159,7 +153,7 @@ QString QTdChat::summary() const
         // TODO: get user
         return QStringLiteral("User not available");
     }
-    return m_lastMessage ? m_lastMessage->summary() : QString();
+    return m_lastMessage->isValid() ? m_lastMessage->summary() : QString();
 }
 
 QObject *QTdChat::messages() const
@@ -172,6 +166,7 @@ void QTdChat::openChat()
     auto *req = new QTdOpenChatRequest;
     req->setChatId(id());
     QTdClient::instance()->send(req);
+    onChatOpened();
 }
 
 void QTdChat::closeChat()
@@ -235,14 +230,8 @@ void QTdChat::updateChatIsPinned(const QJsonObject &json)
 
 void QTdChat::updateChatPhoto(const QJsonObject &photo)
 {
-    if (m_chatPhoto) {
-        delete m_chatPhoto;
-        m_chatPhoto = 0;
-    }
-
-    m_chatPhoto = new QTdChatPhoto(this);
     m_chatPhoto->unmarshalJson(photo);
-    emit chatPhotoChanged(m_chatPhoto);
+    emit chatPhotoChanged(m_chatPhoto.data());
 
     if (m_chatPhoto->small()->local()->path().isEmpty()) {
         m_chatPhoto->small()->downloadFile();
@@ -274,19 +263,9 @@ void QTdChat::updateLastMessage(const QJsonObject &json)
         return;
     }
 
-    if (m_lastMessage) {
-        if (m_lastMessage->parent() == Q_NULLPTR) {
-            delete m_lastMessage;
-        }
-        m_lastMessage = 0;
-    }
-
     m_lastMsgJson = json["last_message"].toObject();
-    auto *m = new QTdMessage(Q_NULLPTR);
-//    m_messages->append(m);
-    m->unmarshalJson(m_lastMsgJson);
-    m_lastMessage = m;
-    emit lastMessageChanged(m_lastMessage);
+    m_lastMessage->unmarshalJson(m_lastMsgJson);
+    emit lastMessageChanged(m_lastMessage.data());
     emit summaryChanged();
 }
 
@@ -297,6 +276,16 @@ void QTdChat::handleUpdateChatAction(const QJsonObject &json)
         return;
     }
     updateChatAction(json);
+}
+
+void QTdChat::onChatOpened()
+{
+    // Do nothing here;
+}
+
+void QTdChat::onChatClosed()
+{
+    // Do nothing here;
 }
 
 void QTdChat::updateChatAction(const QJsonObject &json)

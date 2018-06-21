@@ -2,6 +2,7 @@
 #define QTDSECRETCHAT_H
 
 #include <QObject>
+#include <QPointer>
 #include "qtdchat.h"
 #include "qtdsecretchatstate.h"
 
@@ -33,6 +34,9 @@ signals:
     void secretChatChanged();
     void stateChanged(QTdSecretChatState* state);
 
+private:
+    virtual void onChatOpened();
+
 private slots:
     void getSecretChatData();
     void updateSecretChat(const QJsonObject &data);
@@ -44,7 +48,7 @@ private:
     qint32 m_ttl;
     QString m_keyHash;
     qint32 m_layer;
-    QTdSecretChatState* m_state;
+    QPointer<QTdSecretChatState> m_state;
 };
 
 #endif // QTDSECRETCHAT_H

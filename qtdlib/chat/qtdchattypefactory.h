@@ -3,9 +3,8 @@
 #include "qtdchattype.h"
 #include "qtdchat.h"
 
-class QTdChatFactory
+struct QTdChatFactory
 {
-public:
     static QTdChatType *createType(const QJsonObject &json, QObject *parent);
     static QTdChat *createChat(const QJsonObject &json, QObject *parent = Q_NULLPTR);
 };

@@ -12,6 +12,7 @@
 class QTdConnectionState : public QTdObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdConnectionState)
 public:
     explicit QTdConnectionState(QObject *parent = nullptr);
 };
@@ -23,7 +24,7 @@ public:
  */
 class QTdConnectionStateWaitingForNetwork : public QTdConnectionState {
     Q_OBJECT
-
+    Q_DISABLE_COPY(QTdConnectionStateWaitingForNetwork)
 public:
     explicit QTdConnectionStateWaitingForNetwork (QObject * parent = Q_NULLPTR);
 };
@@ -35,7 +36,7 @@ public:
  */
 class QTdConnectionStateConnectingToProxy : public QTdConnectionState {
     Q_OBJECT
-
+    Q_DISABLE_COPY(QTdConnectionStateConnectingToProxy)
 public:
     explicit QTdConnectionStateConnectingToProxy (QObject * parent = Q_NULLPTR);
 };
@@ -47,7 +48,7 @@ public:
  */
 class QTdConnectionStateConnecting : public QTdConnectionState {
     Q_OBJECT
-
+    Q_DISABLE_COPY(QTdConnectionStateConnecting)
 public:
     explicit QTdConnectionStateConnecting (QObject * parent = Q_NULLPTR);
 };
@@ -59,7 +60,7 @@ public:
  */
 class QTdConnectionStateUpdating : public QTdConnectionState {
     Q_OBJECT
-
+    Q_DISABLE_COPY(QTdConnectionStateUpdating)
 public:
     explicit QTdConnectionStateUpdating (QObject * parent = Q_NULLPTR);
 };
@@ -71,7 +72,7 @@ public:
  */
 class QTdConnectionStateReady : public QTdConnectionState {
     Q_OBJECT
-
+    Q_DISABLE_COPY(QTdConnectionStateReady)
 public:
     explicit QTdConnectionStateReady (QObject * parent = Q_NULLPTR);
 };

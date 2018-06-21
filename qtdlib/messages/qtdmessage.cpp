@@ -10,7 +10,8 @@ QTdMessage::QTdMessage(QObject *parent) : QAbstractInt64Id(parent),
     m_sender(Q_NULLPTR), m_waitingForSender(false), m_sendingState(Q_NULLPTR),
     m_isOutgoing(false), m_canBeEdited(false), m_canBeForwarded(false),
     m_canBeDeletedOnlyForSelf(false), m_canBeDeletedForAllUsers(false),
-    m_isChannelPost(false), m_containsUnreadMention(false), m_content(Q_NULLPTR)
+    m_isChannelPost(false), m_containsUnreadMention(false), m_content(Q_NULLPTR),
+    m_isValid(false)
 {
     setType(MESSAGE);
 }
@@ -55,6 +56,7 @@ void QTdMessage::unmarshalJson(const QJsonObject &json)
     if (json.isEmpty()) {
         return;
     }
+    m_isValid = false;
     m_date = qint32(json["date"].toInt());
     m_sender_user_id = json["sender_user_id"];
     if (m_sender_user_id.isValid()) {
@@ -72,12 +74,16 @@ void QTdMessage::unmarshalJson(const QJsonObject &json)
     m_isChannelPost = json["is_channel_post"].toBool();
     m_containsUnreadMention = json["contains_unread_mention"].toBool();
 
+    if (m_content) {
+        m_content->deleteLater();
+    }
     const QJsonObject content = json["content"].toObject();
     m_content = QTdMessageContentFactory::create(content, this);
     m_content->unmarshalJson(content);
 
     emit messageChanged();
     QAbstractInt64Id::unmarshalJson(json);
+    m_isValid = true;
 }
 
 QTdMessageSendingState *QTdMessage::sendingState() const
@@ -135,7 +141,21 @@ QString QTdMessage::summary() const
         name = m_sender->username();
     }
 
-    return QString("%1: %2").arg(name, QStringLiteral("Sent a message"));
+    QString content;
+
+    switch (m_content->type()) {
+    case QTdMessageContent::MESSAGE_TEXT:
+    {
+        auto *c = qobject_cast<QTdMessageText*>(m_content);
+        content = c->text()->text();
+        break;
+    }
+    default:
+        content = QStringLiteral("Sent a message");
+        break;
+    }
+
+    return QString("%1: %2").arg(name, content);
 }
 
 QString QTdMessage::formatDate(const QDateTime &dt)
@@ -146,6 +166,11 @@ QString QTdMessage::formatDate(const QDateTime &dt)
         return localdt.toString("hh:mm");
     }
     return localdt.toString("ddd hh:mm");
+}
+
+bool QTdMessage::isValid() const
+{
+    return m_isValid;
 }
 
 void QTdMessage::updateSender(const qint32 &senderId)

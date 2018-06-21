@@ -2,6 +2,7 @@
 #define QTDWEBPAGE_H
 
 #include <QObject>
+#include <QScopedPointer>
 #include "common/qabstracttdobject.h"
 #include "files/qtdphotos.h"
 #include "files/qtdanimation.h"
@@ -84,17 +85,17 @@ private:
     QString m_siteName;
     QString m_title;
     QString m_description;
-    QTdPhotos* m_photo;
+    QScopedPointer<QTdPhotos> m_photo;
     QString m_embedUrl;
     QString m_embedType;
     qint32 m_embedWidth;
     qint32 m_embedheight;
     qint32 m_duration;
     QString m_author;
-    QTdAnimation* m_animation;
-    QTdAudio* m_audio;
-    QTdDocument* m_document;
-    QTdSticker* m_sticker;
+    QScopedPointer<QTdAnimation> m_animation;
+    QScopedPointer<QTdAudio> m_audio;
+    QScopedPointer<QTdDocument> m_document;
+    QScopedPointer<QTdSticker> m_sticker;
     bool m_hasInstantView;
 };
 

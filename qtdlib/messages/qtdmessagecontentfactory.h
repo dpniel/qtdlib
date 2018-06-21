@@ -3,9 +3,8 @@
 
 #include "qtdmessagecontent.h"
 
-class QTdMessageContentFactory
+struct QTdMessageContentFactory
 {
-public:
     static QTdMessageContent *create(const QJsonObject &json, QObject *parent = Q_NULLPTR);
 };
 

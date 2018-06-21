@@ -3,9 +3,8 @@
 
 #include "qtdlinkstate.h"
 
-class QTdLinkStateFactory
+struct QTdLinkStateFactory
 {
-public:
     static QTdLinkState *create(const QJsonObject &json, QObject *parent);
 };
 

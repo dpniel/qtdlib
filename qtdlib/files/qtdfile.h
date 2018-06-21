@@ -2,6 +2,7 @@
 #define QTDFILE_H
 
 #include <QObject>
+#include <QScopedPointer>
 #include "common/qabstractint32id.h"
 #include "qtdlocalfile.h"
 #include "qtdremotefile.h"
@@ -39,8 +40,8 @@ private slots:
 private:
     QTdInt32 m_size;
     QTdInt32 m_expectedSize;
-    QTdLocalFile* m_local;
-    QTdRemoteFile* m_remote;
+    QScopedPointer<QTdLocalFile> m_local;
+    QScopedPointer<QTdRemoteFile> m_remote;
 };
 
 #endif // QTDFILE_H

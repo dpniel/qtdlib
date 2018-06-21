@@ -6,6 +6,7 @@
 class QTdUserType : public QTdObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdUserType)
 public:
     explicit QTdUserType(QObject *parent = Q_NULLPTR);
 };
@@ -30,6 +31,7 @@ public:
 signals:
     void userTypeDataChanged();
 private:
+    Q_DISABLE_COPY(QTdUserTypeBot)
     bool m_canJoinGroups;
     bool m_canReadAllGroupMessages;
     bool m_isInline;
@@ -40,6 +42,7 @@ private:
 class QTdUserTypeDeleted : public QTdUserType
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdUserTypeDeleted)
 public:
     explicit QTdUserTypeDeleted(QObject *parent = Q_NULLPTR);
 };
@@ -47,6 +50,7 @@ public:
 class QTdUserTypeRegular : public QTdUserType
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdUserTypeRegular)
 public:
     explicit QTdUserTypeRegular(QObject *parent = Q_NULLPTR);
 };
@@ -54,6 +58,7 @@ public:
 class QTdUserTypeUnknown : public QTdUserType
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdUserTypeUnknown)
 public:
     explicit QTdUserTypeUnknown(QObject *parent = Q_NULLPTR);
 };

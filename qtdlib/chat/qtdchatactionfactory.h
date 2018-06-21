@@ -5,9 +5,8 @@
 #include <QJsonObject>
 #include "qtdchataction.h"
 
-class QTdChatActionFactory
+struct QTdChatActionFactory
 {
-public:
     static QTdChatAction *create(const QJsonObject &json, QObject *parent = Q_NULLPTR);
 };
 

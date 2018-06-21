@@ -2,6 +2,7 @@
 #define QTDDOCUMENT_H
 
 #include <QObject>
+#include <QScopedPointer>
 #include "common/qabstracttdobject.h"
 #include "qtdphotosize.h"
 
@@ -29,10 +30,11 @@ signals:
     void documentChanged();
 
 private:
+    Q_DISABLE_COPY(QTdDocument)
     QString m_fileName;
     QString m_mimeType;
-    QTdPhotoSize* m_thumbnail;
-    QTdFile* m_document;
+    QScopedPointer<QTdPhotoSize> m_thumbnail;
+    QScopedPointer<QTdFile> m_document;
 };
 
 #endif // QTDDOCUMENT_H

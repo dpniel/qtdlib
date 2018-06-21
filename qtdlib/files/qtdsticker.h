@@ -2,6 +2,7 @@
 #define QTDSTICKER_H
 
 #include <QObject>
+#include <QScopedPointer>
 #include "common/qabstracttdobject.h"
 #include "common/qtdint.h"
 #include "qtdphotosize.h"
@@ -46,8 +47,8 @@ private:
     qint32 m_height;
     QString m_emoji;
     bool m_isMask;
-    QTdPhotoSize* m_thumbnail;
-    QTdFile* m_sticker;
+    QScopedPointer<QTdPhotoSize> m_thumbnail;
+    QScopedPointer<QTdFile> m_sticker;
 };
 
 #endif // QTDSTICKER_H

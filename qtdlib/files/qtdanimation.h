@@ -2,6 +2,7 @@
 #define QTDANIMATION_H
 
 #include <QObject>
+#include <QScopedPointer>
 #include "common/qabstracttdobject.h"
 #include "qtdphotosize.h"
 #include "qtdfile.h"
@@ -49,8 +50,8 @@ private:
     qint32 m_height;
     QString m_fileName;
     QString m_mimeType;
-    QTdPhotoSize* m_thumbnail;
-    QTdFile* m_animation;
+    QScopedPointer<QTdPhotoSize> m_thumbnail;
+    QScopedPointer<QTdFile> m_animation;
 };
 
 #endif // QTDANIMATION_H

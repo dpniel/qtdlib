@@ -6,12 +6,9 @@
 class QTdReportChatRequest : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(QTdReportChatRequest)
 public:
     explicit QTdReportChatRequest(QObject *parent = nullptr);
-
-signals:
-
-public slots:
 };
 
 #endif // QTDREPORTCHATREQUEST_H

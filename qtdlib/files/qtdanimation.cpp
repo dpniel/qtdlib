@@ -2,7 +2,7 @@
 
 QTdAnimation::QTdAnimation(QObject *parent) : QTdObject(parent),
     m_duration(0), m_width(0), m_height(0),
-    m_thumbnail(Q_NULLPTR), m_animation(Q_NULLPTR)
+    m_thumbnail(new QTdPhotoSize), m_animation(new QTdFile)
 {
     setType(ANIMATION);
 }
@@ -34,12 +34,12 @@ QString QTdAnimation::mimeType() const
 
 QTdPhotoSize *QTdAnimation::thumbnail() const
 {
-    return m_thumbnail;
+    return m_thumbnail.data();
 }
 
 QTdFile *QTdAnimation::animation() const
 {
-    return m_animation;
+    return m_animation.data();
 }
 
 void QTdAnimation::unmarshalJson(const QJsonObject &json)
@@ -50,10 +50,8 @@ void QTdAnimation::unmarshalJson(const QJsonObject &json)
     m_fileName = json["file_name"].toString();
     m_mimeType = json["mime_type"].toString();
     if (json.contains("thumbnail")) {
-        m_thumbnail = new QTdPhotoSize(this);
         m_thumbnail->unmarshalJson(json["thumbnail"].toObject());
     }
-    m_animation = new QTdFile(this);
     m_animation->unmarshalJson(json["animation"].toObject());
     emit animationChanged();
 }

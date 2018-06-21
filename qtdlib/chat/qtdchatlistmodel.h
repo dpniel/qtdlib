@@ -52,7 +52,8 @@ private slots:
      */
     void handlePinChatAction(const qint64 &chatId, const bool &pinned);
 private:
-    QQmlObjectListModel<QTdChat> *m_model;
+    Q_DISABLE_COPY(QTdChatListModel)
+    QPointer<QQmlObjectListModel<QTdChat>> m_model;
     PinnedChats m_pinnedChats;
     QPointer<QTdChat> m_currentChat;
 };

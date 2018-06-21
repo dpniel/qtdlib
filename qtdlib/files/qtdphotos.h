@@ -2,6 +2,7 @@
 #define QTDPHOTOS_H
 
 #include <QObject>
+#include <QPointer>
 #include "common/qabstractint64id.h"
 #include "models/QmlObjectListModel.h"
 #include "qtdphotosize.h"
@@ -13,6 +14,7 @@ class QTdPhotos : public QAbstractInt64Id
     Q_PROPERTY(QObject* sizes READ qmlSizes NOTIFY photosChanged)
 public:
     explicit QTdPhotos(QObject *parent = nullptr);
+    ~QTdPhotos();
 
     void unmarshalJson(const QJsonObject &json);
 
@@ -26,7 +28,7 @@ signals:
 
 private:
     bool m_hasStickers;
-    QQmlObjectListModel<QTdPhotoSize> *m_sizes;
+    QPointer<QQmlObjectListModel<QTdPhotoSize>> m_sizes;
     bool m_hasSitckers;
 };
 

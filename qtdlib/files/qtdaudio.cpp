@@ -1,8 +1,8 @@
 #include "qtdaudio.h"
 
 QTdAudio::QTdAudio(QObject *parent) : QTdObject(parent),
-    m_duration(0), m_albumCoverThumbnail(Q_NULLPTR),
-    m_audio(Q_NULLPTR)
+    m_duration(0), m_albumCoverThumbnail(new QTdPhotoSize),
+    m_audio(new QTdFile)
 {
     setType(AUDIO);
 }
@@ -34,12 +34,12 @@ QString QTdAudio::mimeType() const
 
 QTdPhotoSize *QTdAudio::albumCoverThumbnail() const
 {
-    return m_albumCoverThumbnail;
+    return m_albumCoverThumbnail.data();
 }
 
 QTdFile *QTdAudio::audio() const
 {
-    return m_audio;
+    return m_audio.data();
 }
 
 void QTdAudio::unmarshalJson(const QJsonObject &json)
@@ -50,10 +50,8 @@ void QTdAudio::unmarshalJson(const QJsonObject &json)
     m_fileName = json["file_name"].toString();
     m_mimeType = json["mime_type"].toString();
     if (json.contains("album_cover_thumbnail")) {
-        m_albumCoverThumbnail = new QTdPhotoSize(this);
         m_albumCoverThumbnail->unmarshalJson(json["album_cover_thumbnail"].toObject());
     }
-    m_audio = new QTdFile(this);
     m_audio->unmarshalJson(json["audio"].toObject());
     emit audioChanged();
 }

@@ -3,9 +3,8 @@
 
 #include "qtduserstatus.h"
 
-class QTdUserStatusFactory
+struct QTdUserStatusFactory
 {
-public:
     static QTdUserStatus *create(const QJsonObject &json, QObject *parent);
 };
 
