@@ -158,12 +158,11 @@ void QTdTextFormatter::doFormat()
             break;
         }
         case QTdTextEntity::TEXT_ENTITY_TYPE_TEXT_URL:
-            break;
         case QTdTextEntity::TEXT_ENTITY_TYPE_URL:
         {
             QTextCharFormat format;
             format.setAnchor(true);
-            format.setAnchorHref(subText);
+            format.setAnchorHref(entity->entityType()->type() == QTdTextEntity::TEXT_ENTITY_TYPE_URL? subText : entity.url());
             format.setFontUnderline(true);
             if (m_linkColor.isValid()) {
                 format.setForeground(m_linkColor);
